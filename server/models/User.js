@@ -15,6 +15,11 @@ const userSchema = new Schema({
     required: true,
     trim: true
   },
+  username: {
+    type: String,
+    required: true,
+    trim: true
+  },
   email: {
     type: String,
     required: true,
@@ -25,7 +30,27 @@ const userSchema = new Schema({
     required: true,
     minlength: 5
   },
-  orders: [Order.schema]
+  orders: [Order.schema],
+  boothsOwned: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'Booth'
+    }
+  ],
+  boothsManaging: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'Booth'
+    }
+  ],
+  isAdmin: {
+    type: Boolean,
+    required: false
+  },
+  accountCreatedDate: {
+    type: Date,
+    default: Date.now
+  }
 });
 
 // set up pre-save middleware to create password
