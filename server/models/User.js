@@ -46,7 +46,7 @@ const userSchema = new Schema({
   isAdmin: {
     type: Boolean
   },
-  accountCreatedDate: {
+  createdAt: {
     type: Date,
     default: Date.now
   }

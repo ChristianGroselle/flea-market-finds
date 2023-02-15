@@ -1,5 +1,5 @@
 const { AuthenticationError } = require('apollo-server-express');
-const { User, Product, Category, Order } = require('../models');
+const { User, Product, Category, Order, Booth } = require('../models');
 const { signToken } = require('../utils/auth');
 const stripe = require('stripe')('sk_test_4eC39HqLyjWDarjtT1zdp7dc');
 
@@ -63,7 +63,7 @@ const resolvers = {
         const product = await stripe.products.create({
           name: products[i].name,
           description: products[i].description,
-          images: [`${url}/images/${products[i].image}`]
+          images: [`${url}/images/${products[i].image}`] // CHECK LATER
         });
 
         const price = await stripe.prices.create({
@@ -87,7 +87,10 @@ const resolvers = {
       });
 
       return { session: session.id };
-    }
+    },
+    booth: async (parent, { _id }) => {
+      return await Booth.findById(_id).populate('product');
+    },
   },
   Mutation: {
     addUser: async (parent, args) => {
