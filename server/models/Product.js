@@ -33,6 +33,14 @@ const productSchema = new Schema({
   ],
   condition: {
     type: String
+  },
+  timeOnMarket: {
+    type: Date,
+    default: Date.now,
+    get: (date) => { if (date) return date.toISOString().split("T") [0] }
+  },
+  discountTimerOn: {
+    type: boolean,
   }
 });
 
