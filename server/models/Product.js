@@ -22,7 +22,7 @@ const productSchema = new Schema({
   quantity: {
     type: Number,
     min: 0,
-    default: 0
+    default: 1
   },
   category: [
     {
@@ -32,15 +32,16 @@ const productSchema = new Schema({
     }
   ],
   condition: {
-    type: String
+    type: String,
+    required: true
   },
-  timeOnMarket: {
+  createdAt: {
     type: Date,
     default: Date.now,
     get: (date) => { if (date) return date.toISOString().split("T") [0] }
   },
   discountTimerOn: {
-    type: boolean,
+    type: Boolean
   }
 });
 

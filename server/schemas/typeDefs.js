@@ -3,7 +3,7 @@ const { gql } = require('apollo-server-express');
 const typeDefs = gql`
   type Category {
     _id: ID
-    name: String
+    name: String,
   }
 
   type Product {
@@ -11,14 +11,17 @@ const typeDefs = gql`
     name: String
     description: String
     image: String
-    quantity: Int
     price: Float
+    quantity: Int
     category: Category
+    condition: String
+    createdAt: Date
+    discountTimerOn: Boolean 
   }
 
   type Order {
     _id: ID
-    purchaseDate: String
+    purchaseDate: Date
     products: [Product]
   }
 
@@ -26,8 +29,23 @@ const typeDefs = gql`
     _id: ID
     firstName: String
     lastName: String
+    username: String
     email: String
+    password: String
     orders: [Order]
+    boothsOwned: [Booth]
+    boothsManaging: [Booth]
+    isAdmin: Boolean
+    createdAt: Date
+  }
+
+  type Booth {
+    boothName: String,
+    owner: [User]
+    accountManager: [User]
+    product: [Product]
+    description: String
+    logo: String
   }
 
   type Checkout {
@@ -46,14 +64,25 @@ const typeDefs = gql`
     user: User
     order(_id: ID!): Order
     checkout(products: [ID]!): Checkout
+    booth(_id: ID!): Booth
   }
 
   type Mutation {
-    addUser(firstName: String!, lastName: String!, email: String!, password: String!): Auth
-    addOrder(products: [ID]!): Order
+    addUser(firstName: String!, lastName: String!, username: String!, email: String!, password: String!): Auth
     updateUser(firstName: String, lastName: String, email: String, password: String): User
-    updateProduct(_id: ID!, quantity: Int!): Product
+    deleteUser(firstName: String!, lastName: String!, username: String!, email: String!, password: String!): Auth
+    
     login(email: String!, password: String!): Auth
+
+    addOrder(products: [ID]!): Order
+
+    addBooth(boothName: String!, description: String!, logo: String): Booth
+    updateBooth(boothName: String!, description: String!, logo: String): Booth
+    deleteBooth(boothName: String!, description: String!, logo: String): Booth
+
+    addProduct(name: String!, price: Number!, image: String, categoy: [Category]!, condition: String!): Product
+    updateProduct(_id: ID!, quantity: Int!): Product
+    deleteProduct(name: String!, price: Number!, image: String, categoy: [Category]!, condition: String!): Product
   }
 `;
 

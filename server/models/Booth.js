@@ -9,7 +9,8 @@ const boothSchema = new Schema({
   boothName: {
     type: String,
     required: true,
-    trim: true
+    trim: true,
+    unique: true
   },
   owner:{
     type: Schema.Types.ObjectId,
@@ -26,9 +27,16 @@ const boothSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'Product'
     }
-  ]
+  ],
+  description: {
+    type: String,
+    required: true
+  },
+  logo: {
+    type: String
+  }
 });
 
-const Order = mongoose.model('Order', orderSchema);
+const Booth = mongoose.model('Booth', boothSchema);
 
-module.exports = Order;
+module.exports = Booth;
