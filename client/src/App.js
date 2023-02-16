@@ -20,6 +20,7 @@ import store from "./utils/store"
 
 import Success from './pages/Success';
 import OrderHistory from './pages/OrderHistory';
+import UserProfile from './pages/UserProfile';
 
 const httpLink = createHttpLink({
   uri: '/graphql',
@@ -76,6 +77,10 @@ function App() {
               <Route 
                 path="*" 
                 element={<NoMatch />} 
+              />
+              <Route
+                path="/userProfile"
+                element={<UserProfile />}
               />
             </Routes>
           </Provider>
