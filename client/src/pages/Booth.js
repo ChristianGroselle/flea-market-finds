@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import ProductList from "../components/ProductList";
 import CategoryMenu from "../components/CategoryMenu";
 import Cart from "../components/Cart";
+import CategoryDropDown from "../components/CategoryDropDown";
 
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
@@ -9,6 +10,8 @@ import Form from "react-bootstrap/Form";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
+
+import TestComp from "../components/TestComp";
 
 const Booth = () => {
   return (
@@ -23,21 +26,7 @@ const Booth = () => {
               style={{ maxHeight: "100px" }}
               navbarScroll
             >
-              <NavDropdown title="Filter" id="navbarScrollingDropdown">
-                <NavDropdown.Item href="#action3">Food</NavDropdown.Item>
-
-                <NavDropdown.Item href="#action4">
-                  Household Supplies
-                </NavDropdown.Item>
-
-                <NavDropdown.Item href="#action5">Electronics</NavDropdown.Item>
-
-                <NavDropdown.Item href="#action6">Books</NavDropdown.Item>
-
-                <NavDropdown.Item href="#action7">Toys</NavDropdown.Item>
-
-                <NavDropdown.Item href="#action7">None</NavDropdown.Item>
-              </NavDropdown>
+              <CategoryDropDown />
             </Nav>
             <Form className="d-flex">
               <Form.Control
@@ -51,7 +40,6 @@ const Booth = () => {
           </Navbar.Collapse>
         </Container>
       </Navbar>
-      <CategoryMenu />
       <ProductList />
     </>
   );
