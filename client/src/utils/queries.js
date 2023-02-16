@@ -53,6 +53,8 @@ export const QUERY_USER = gql`
     user {
       firstName
       lastName
+      username
+      email
       orders {
         _id
         purchaseDate
@@ -65,6 +67,7 @@ export const QUERY_USER = gql`
           image
         }
       }
+      createdAt
     }
   }
 `;

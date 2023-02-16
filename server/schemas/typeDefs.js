@@ -15,13 +15,13 @@ const typeDefs = gql`
     quantity: Int
     category: Category
     condition: String
-    createdAt: Date
+    createdAt: String
     discountTimerOn: Boolean 
   }
 
   type Order {
     _id: ID
-    purchaseDate: Date
+    purchaseDate: String
     products: [Product]
   }
 
@@ -36,7 +36,7 @@ const typeDefs = gql`
     boothsOwned: [Booth]
     boothsManaging: [Booth]
     isAdmin: Boolean
-    createdAt: Date
+    createdAt: String
   }
 
   type Booth {
@@ -80,9 +80,9 @@ const typeDefs = gql`
     updateBooth(boothName: String!, description: String!, logo: String): Booth
     deleteBooth(boothName: String!, description: String!, logo: String): Booth
 
-    addProduct(name: String!, price: Number!, image: String, categoy: [Category]!, condition: String!): Product
+    addProduct(name: String!, price: Float!, image: String, category: [String]!, condition: String!): Product
     updateProduct(_id: ID!, quantity: Int!): Product
-    deleteProduct(name: String!, price: Number!, image: String, categoy: [Category]!, condition: String!): Product
+    deleteProduct(name: String!, price: Float!, image: String, category: [String]!, condition: String!): Product
   }
 `;
 
