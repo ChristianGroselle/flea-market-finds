@@ -1,6 +1,6 @@
 import React from "react";
 import BoothPreview from "../components/BoothPreview";
-import ProductList from "../components/ProductList";
+import ProductList from "../components/ProductListLegacy";
 import CategoryMenu from "../components/CategoryMenu";
 import Cart from "../components/Cart";
 

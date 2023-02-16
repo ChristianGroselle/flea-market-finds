@@ -12,7 +12,7 @@ import { idbPromise } from "../../utils/helpers";
 function CategoryDropDown() {
   const dispatch = useDispatch();
   const state = useSelector((state) => state);
-  const { categories } = state;
+  const { categories, currentCategory } = state;
 
   const { loading, data: categoryData } = useQuery(QUERY_CATEGORIES);
 
@@ -36,21 +36,35 @@ function CategoryDropDown() {
   }, [categoryData, loading, dispatch]);
 
   const handleSelect = (id) => {
-    dispatch({
-      type: UPDATE_CURRENT_CATEGORY,
-      currentCategory: id,
-    });
+    if (id === "none") {
+      dispatch({
+        type: UPDATE_CURRENT_CATEGORY,
+        currentCategory: null,
+      });
+    } else {
+      dispatch({
+        type: UPDATE_CURRENT_CATEGORY,
+        currentCategory: id,
+      });
+    }
   };
 
   return (
     <DropdownButton
       id="category-dropdown"
-      title="Filter"
+      title={
+        currentCategory
+          ? categories.find((category) => category._id === currentCategory).name
+          : "Choose a Category"
+      }
       onSelect={handleSelect}
     >
-      {categories.map((item) => (
-        <Dropdown.Item key={item._id} eventKey={item._id}>
-          {item.name}
+      <Dropdown.Item key="none" eventKey="none">
+        None
+      </Dropdown.Item>
+      {categories.map((category) => (
+        <Dropdown.Item key={category._id} eventKey={category._id}>
+          {category.name}
         </Dropdown.Item>
       ))}
     </DropdownButton>

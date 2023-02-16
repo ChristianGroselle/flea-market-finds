@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
-import ProductItem from "../ProductItem";
+import ProductItem from "../ProductItemLegacy";
+// import { useStoreContext } from '../../utils/GlobalState';
 import { useDispatch, useSelector } from "react-redux";
 import { UPDATE_PRODUCTS } from "../../utils/actions";
 import { useQuery } from "@apollo/client";
@@ -7,11 +8,12 @@ import { QUERY_PRODUCTS } from "../../utils/queries";
 import { idbPromise } from "../../utils/helpers";
 import spinner from "../../assets/spinner.gif";
 
-function ProductList({ searchText, selectedCategory }) {
+function ProductListLegacy() {
+  // const [state, dispatch] = useStoreContext();
   const dispatch = useDispatch();
   const state = useSelector((state) => state);
 
-  const { products, currentCategory } = state;
+  const { currentCategory } = state;
 
   const { loading, data } = useQuery(QUERY_PRODUCTS);
 
@@ -35,33 +37,19 @@ function ProductList({ searchText, selectedCategory }) {
   }, [data, loading, dispatch]);
 
   function filterProducts() {
-    let filteredProducts = state.products;
-
-    if (currentCategory) {
-      filteredProducts = filteredProducts.filter(
-        (product) => product.category._id === currentCategory
-      );
+    if (!currentCategory) {
+      return state.products;
     }
 
-    if (selectedCategory) {
-      filteredProducts = filteredProducts.filter(
-        (product) => product.category._id === selectedCategory
-      );
-    }
-
-    if (searchText) {
-      filteredProducts = filteredProducts.filter((product) =>
-        product.name.toLowerCase().includes(searchText.toLowerCase())
-      );
-    }
-
-    return filteredProducts;
+    return state.products.filter(
+      (product) => product.category._id === currentCategory
+    );
   }
 
   return (
     <div className="my-2">
       <h2>Our Products:</h2>
-      {products.length ? (
+      {state.products.length ? (
         <div className="flex-row">
           {filterProducts().map((product) => (
             <ProductItem
@@ -82,4 +70,4 @@ function ProductList({ searchText, selectedCategory }) {
   );
 }
 
-export default ProductList;
+export default ProductListLegacy;

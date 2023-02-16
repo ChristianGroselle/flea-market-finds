@@ -1,13 +1,13 @@
 import React, { useEffect } from "react";
 import Card from "react-bootstrap/Card";
-import ProductItem from "../ProductItem";
+import ProductItem from "../ProductItemLegacy";
 import { useStoreContext } from "../../utils/GlobalState";
 import { UPDATE_PRODUCTS } from "../../utils/actions";
 import { useQuery } from "@apollo/client";
 import { QUERY_PRODUCTS } from "../../utils/queries";
 import { idbPromise } from "../../utils/helpers";
 import spinner from "../../assets/spinner.gif";
-import ProductList from "../ProductList";
+import ProductList from "../ProductListLegacy";
 
 const BoothPreview = () => {
   return (

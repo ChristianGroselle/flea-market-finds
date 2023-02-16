@@ -1,19 +1,23 @@
-import React, { useEffect } from "react";
+import React, { useState } from "react";
 import ProductList from "../components/ProductList";
-import CategoryMenu from "../components/CategoryMenu";
-import Cart from "../components/Cart";
 import CategoryDropDown from "../components/CategoryDropDown";
 
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 
-import TestComp from "../components/TestComp";
-
 const Booth = () => {
+  const [searchText, setSearchText] = useState("");
+
+  const handleSearchChange = (event) => {
+    setSearchText(event.target.value);
+  };
+
   return (
     <>
       <Navbar bg="light" expand="lg">
@@ -25,22 +29,22 @@ const Booth = () => {
               className="me-auto my-2 my-lg-0"
               style={{ maxHeight: "100px" }}
               navbarScroll
-            >
-              <CategoryDropDown />
-            </Nav>
+            ></Nav>
             <Form className="d-flex">
               <Form.Control
-                type="search"
-                placeholder="Search"
-                className="me-2"
-                aria-label="Search"
+                type="text"
+                placeholder="Search products"
+                value={searchText}
+                onChange={handleSearchChange}
               />
-              <Button variant="outline-success">Search</Button>
             </Form>
+            <CategoryDropDown />
           </Navbar.Collapse>
         </Container>
       </Navbar>
-      <ProductList />
+      <Container>
+        <ProductList searchText={searchText} />
+      </Container>
     </>
   );
 };
