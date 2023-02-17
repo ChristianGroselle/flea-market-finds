@@ -140,25 +140,6 @@ db.once('open', async () => {
 
   console.log('products seeded');
 
-  await Booth.deleteMany();
-
-  const booths = await Booth.insertMany([
-    { boothName: 'Pamela Booth', description: 'fun home items' },
-    { boothName: 'Worker Booth', description: 'fun work items' }
-  ]);
-
-  // const booths = await Booth.insertMany([
-  //   {
-  //     boothName: "Pamela's Booth",
-  //     description:
-  //       "fun kitchen decorum items",
-  //     logo: 'cookie-tin.jpg',
-  //     product: [products[0]._id, products[0]._id, products[1]._id]
-  //   },
-  // ]);
-
-  console.log('booths seeded');
-
   await User.deleteMany();
 
   await User.create({
@@ -171,12 +152,7 @@ db.once('open', async () => {
       {
         products: [products[0]._id, products[0]._id, products[1]._id]
       }
-    ],
-    // boothsOwned: [
-    //   {
-    //     boothName: 'Pamela Booth'
-    //   }
-    // ]
+    ]
   });
 
   await User.create({
@@ -189,5 +165,71 @@ db.once('open', async () => {
 
   console.log('users seeded');
 
+  await Booth.deleteMany();
+
+  const booths = await Booth.insertMany([
+    {
+      boothName: "Pamela's Booth",
+      description:
+        "fun kitchen decorum items",
+      logo: 'cookie-tin.jpg',
+      product: [products[0]._id, products[0]._id, products[1]._id]
+    },
+  ]);
+
+  console.log('booths seeded');
+
   process.exit();
+});
+
+// Sample user data
+const users = [
+  { name: 'Alice', boothIndices: [0, 2] },
+  { name: 'Bob', boothIndices: [1, 3] }
+];
+// Sample booth data
+const booths = [
+  { name: 'Booth 1' },
+  { name: 'Booth 2' },
+  { name: 'Booth 3' },
+  { name: 'Booth 4' }
+];
+// Create the users
+User.create(users, (err, createdUsers) => {
+  if (err) {
+    console.error(err);
+  } else {
+    console.log('Users created:', createdUsers);
+    // Create the booths
+    Booth.create(booths, (err, createdBooths) => {
+      if (err) {
+        console.error(err);
+      } else {
+        console.log('Booths created:', createdBooths);
+        // Update the users with booth references
+        createdUsers.forEach((user, i) => {
+          // Choose the booths to assign to the user based on the indices in user.boothIndices
+          const boothIds = user.boothIndices.map(index => createdBooths[index]._id);
+          // Add the booths to the user's "boothsOwned" property
+          user.boothsOwned = boothIds;
+          // Save the user
+          user.save((err, savedUser) => {
+            if (err) {
+              console.error(err);
+            } else {
+              console.log(`User ${savedUser.name} saved with booths:`, savedUser.boothsOwned);
+              // Update the booths with owner references
+              Booth.updateMany({ _id: { $in: boothIds } }, { owner: savedUser._id }, (err, result) => {
+                if (err) {
+                  console.error(err);
+                } else {
+                  console.log(`${result.nModified} booths updated with owner:`, savedUser.name);
+                }
+              });
+            }
+          });
+        });
+      }
+    });
+  }
 });
