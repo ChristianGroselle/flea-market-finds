@@ -143,19 +143,14 @@ db.once('open', async () => {
   await Booth.deleteMany();
 
   const booths = await Booth.insertMany([
-    { boothName: 'Pamela Booth', description: 'fun home items' },
-    { boothName: 'Worker Booth', description: 'fun work items' }
+    {
+      boothName: "Pamela's Booth",
+      description:
+        "fun kitchen decorum items",
+      logo: 'cookie-tin.jpg',
+      product: [products[0]._id, products[0]._id, products[1]._id]
+    },
   ]);
-
-  // const booths = await Booth.insertMany([
-  //   {
-  //     boothName: "Pamela's Booth",
-  //     description:
-  //       "fun kitchen decorum items",
-  //     logo: 'cookie-tin.jpg',
-  //     product: [products[0]._id, products[0]._id, products[1]._id]
-  //   },
-  // ]);
 
   console.log('booths seeded');
 
@@ -172,11 +167,7 @@ db.once('open', async () => {
         products: [products[0]._id, products[0]._id, products[1]._id]
       }
     ],
-    // boothsOwned: [
-    //   {
-    //     boothName: 'Pamela Booth'
-    //   }
-    // ]
+    boothsOwned: booths[0]._id
   });
 
   await User.create({
