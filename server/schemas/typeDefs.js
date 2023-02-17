@@ -22,7 +22,6 @@ const typeDefs = gql`
   type Order {
     _id: ID
     purchaseDate: String
-    purchaseDate: String
     products: [Product]
   }
 
@@ -37,7 +36,6 @@ const typeDefs = gql`
     boothsOwned: [Booth]
     boothsManaging: [Booth]
     isAdmin: Boolean
-    createdAt: String
     createdAt: String
   }
 
