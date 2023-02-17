@@ -31,7 +31,8 @@ const userSchema = new Schema({
     minlength: 5
   },
   orders: [Order.schema],
-  boothsOwned: [
+  boothsOwned: 
+  [
     {
       type: Schema.Types.ObjectId,
       ref: 'Booth'

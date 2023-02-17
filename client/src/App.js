@@ -18,6 +18,7 @@ import { StoreProvider } from './utils/GlobalState';
 import Success from './pages/Success';
 import OrderHistory from './pages/OrderHistory';
 import UserProfile from './pages/UserProfile';
+import BoothCreation from './pages/BoothCreation';
 
 const httpLink = createHttpLink({
   uri: '/graphql',
@@ -77,6 +78,10 @@ function App() {
               <Route
                 path="/userProfile"
                 element={<UserProfile />}
+              />
+              <Route
+                path="/boothCreation"
+                element={<BoothCreation/>}
               />
             </Routes>
           </StoreProvider>
