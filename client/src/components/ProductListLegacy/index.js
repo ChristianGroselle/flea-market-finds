@@ -1,7 +1,5 @@
 import React, { useEffect } from "react";
-import ProductItem from "../ProductItem";
-import ProductList from "../ProductList";
-
+import ProductItem from "../ProductItemLegacy";
 // import { useStoreContext } from '../../utils/GlobalState';
 import { useDispatch, useSelector } from "react-redux";
 import { UPDATE_PRODUCTS } from "../../utils/actions";
@@ -10,7 +8,7 @@ import { QUERY_PRODUCTS } from "../../utils/queries";
 import { idbPromise } from "../../utils/helpers";
 import spinner from "../../assets/spinner.gif";
 
-function BoothList() {
+function ProductListLegacy() {
   // const [state, dispatch] = useStoreContext();
   const dispatch = useDispatch();
   const state = useSelector((state) => state);
@@ -72,4 +70,4 @@ function BoothList() {
   );
 }
 
-export default ProductList;
+export default ProductListLegacy;
