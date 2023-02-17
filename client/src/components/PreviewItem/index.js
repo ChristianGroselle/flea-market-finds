@@ -6,10 +6,17 @@ import { useDispatch, useSelector } from "react-redux";
 import { ADD_TO_CART, UPDATE_CART_QUANTITY } from "../../utils/actions";
 import { idbPromise } from "../../utils/helpers";
 
-import Button from "react-bootstrap/Button";
-import Card from "react-bootstrap/Card";
+import {
+  Card,
+  CardGroup,
+  Col,
+  Row,
+  Container,
+  Button,
+  Stack,
+} from "react-bootstrap";
 
-function ProductItem(item) {
+function PreviewItem(item) {
   // const [state, dispatch] = useStoreContext();
   const dispatch = useDispatch();
   const state = useSelector((state) => state);
@@ -40,27 +47,17 @@ function ProductItem(item) {
   };
 
   return (
-    <Card
-      className="text-center"
-      style={{ marginTop: "1rem", marginBottom: "1rem" }}
-    >
-      <Card.Header as="h5">{name}</Card.Header>
-      <Card.Body>
-        <Card.Title>${price}</Card.Title>
-        <Card.Img src={`/images/${image}`} alt={name} />
-        <Card.Body>
-          <p>Short Description.</p>
-          <hr />
-          <p>
-            {quantity} {pluralize("item", quantity)} in stock
-          </p>
-        </Card.Body>
-      </Card.Body>
-      <Card.Footer className="text-muted">
-        <Button variant="primary">Add to cart</Button>
-      </Card.Footer>
-    </Card>
+    <>
+      <Col xs={12} sm={12} md={6}>
+        <Card style={{ height: "100%", width: "100%" }}>
+          <Card.Header as="h5">{name}</Card.Header>
+          <Card.Body>
+            <Card.Img src={`/images/${image}`} alt={name} />
+          </Card.Body>
+        </Card>
+      </Col>
+    </>
   );
 }
 
-export default ProductItem;
+export default PreviewItem;
