@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import ProductItem from "../ProductItem";
+import PreviewItem from "../PreviewItem";
 import { useDispatch, useSelector } from "react-redux";
 import { UPDATE_PRODUCTS } from "../../utils/actions";
 import { useQuery } from "@apollo/client";
@@ -7,7 +8,7 @@ import { QUERY_PRODUCTS } from "../../utils/queries";
 import { idbPromise } from "../../utils/helpers";
 import spinner from "../../assets/spinner.gif";
 
-function ProductList({ searchText, selectedCategory }) {
+function ProductListPreview({ searchText, selectedCategory }) {
   const dispatch = useDispatch();
   const state = useSelector((state) => state);
 
@@ -55,16 +56,18 @@ function ProductList({ searchText, selectedCategory }) {
       );
     }
 
+    // Limit the number of products to 4
+    filteredProducts = filteredProducts.slice(-4);
+
     return filteredProducts;
   }
 
   return (
-    <div className="my-2">
-      <h2>Our Products:</h2>
+    <>
       {products.length ? (
-        <div className="flex-row">
+        <>
           {filterProducts().map((product) => (
-            <ProductItem
+            <PreviewItem
               key={product._id}
               _id={product._id}
               image={product.image}
@@ -73,13 +76,13 @@ function ProductList({ searchText, selectedCategory }) {
               quantity={product.quantity}
             />
           ))}
-        </div>
+        </>
       ) : (
         <h3>You haven't added any products yet!</h3>
       )}
       {loading ? <img src={spinner} alt="loading" /> : null}
-    </div>
+    </>
   );
 }
 
-export default ProductList;
+export default ProductListPreview;
