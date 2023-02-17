@@ -30,14 +30,8 @@ export const ADD_ORDER = gql`
 `;
 
 export const ADD_BOOTH = gql`
-  mutation addBooth(
-    $boothName: String!
-    $description: String!
-  ) {
-    addBooth(
-      boothName: $boothName
-      description: $description
-    ) {
+  mutation addBooth($boothName: String!, $description: String!) {
+    addBooth(boothName: $boothName, description: $description) {
       token
       booth {
         _id
@@ -67,23 +61,23 @@ export const ADD_USER = gql`
   }
 `;
 
-export const ADD_BOOTH = gql`
-  mutation addUser(
-    $firstName: String!
-    $lastName: String!
-    $email: String!
-    $password: String!
-  ) {
-    addUser(
-      firstName: $firstName
-      lastName: $lastName
-      email: $email
-      password: $password
-    ) {
-      token
-      user {
-        _id
-      }
-    }
-  }
-`;
+// export const ADD_BOOTH = gql`
+//   mutation addUser(
+//     $firstName: String!
+//     $lastName: String!
+//     $email: String!
+//     $password: String!
+//   ) {
+//     addUser(
+//       firstName: $firstName
+//       lastName: $lastName
+//       email: $email
+//       password: $password
+//     ) {
+//       token
+//       user {
+//         _id
+//       }
+//     }
+//   }
+// `;
