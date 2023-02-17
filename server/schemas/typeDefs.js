@@ -22,6 +22,7 @@ const typeDefs = gql`
   type Order {
     _id: ID
     purchaseDate: String
+    purchaseDate: String
     products: [Product]
   }
 
@@ -36,6 +37,7 @@ const typeDefs = gql`
     boothsOwned: [Booth]
     boothsManaging: [Booth]
     isAdmin: Boolean
+    createdAt: String
     createdAt: String
   }
 
@@ -101,7 +103,7 @@ const typeDefs = gql`
       name: String!
       price: Float!
       image: String
-      category: String!
+      category: [String]!
       condition: String!
     ): Product
     updateProduct(_id: ID!, quantity: Int!): Product
@@ -109,7 +111,7 @@ const typeDefs = gql`
       name: String!
       price: Float!
       image: String
-      category: String!
+      category: [String]!
       condition: String!
     ): Product
   }

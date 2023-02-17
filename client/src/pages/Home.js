@@ -20,7 +20,13 @@ const Home = () => {
   return (
     <Container>
       <Row>
-        <Col xl="3" md="6" sm="12">
+        <Col xl="4" md="6" sm="12">
+          <BoothPreview />
+        </Col>
+        <Col xl="4" md="6" sm="12">
+          <BoothPreview />
+        </Col>
+        <Col xl="4" md="6" sm="12">
           <BoothPreview />
         </Col>
       </Row>
