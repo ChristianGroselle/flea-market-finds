@@ -195,11 +195,6 @@ db.once("open", async () => {
         _id: booths[0]._id,
       },
     ],
-    boothsOwned: [
-      {
-        _id: booths[0]._id
-      }
-    ]
   });
 
   await User.create({

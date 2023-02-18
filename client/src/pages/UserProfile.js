@@ -33,7 +33,7 @@ const UserProfile = () => {
     // console.log(ordersArray);
 
     const navigateToBooth = () => {
-        navigate('/')
+        navigate('/booth')
     };
 
     const createBooth = () => {
