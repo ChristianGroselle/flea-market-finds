@@ -86,3 +86,12 @@ export const QUERY_USER = gql`
     }
   }
 `;
+export const USER_BOOTHS = gql`
+  {
+    userBooths {
+      boothName
+      description
+      logo
+    }
+  }
+`;
