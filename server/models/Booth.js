@@ -1,9 +1,6 @@
 const mongoose = require('mongoose');
 
 const { Schema } = mongoose;
-const bcrypt = require('bcrypt');
-const User = require('./User');
-const Product = require('./Product');
 
 const boothSchema = new Schema({
   boothName: {

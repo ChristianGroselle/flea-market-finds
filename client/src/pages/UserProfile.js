@@ -63,7 +63,7 @@ const UserProfile = () => {
                             ))
                         }
                         </li> */}
-                        <li>Booths Owned (Work in Progress): {user.boothsOwned}</li>
+                        <li>Booths (Work in Progress): {user.boothsOwned}</li>
                         <li>Booths Managing (Work in Progress): {user.boothsManaging}</li>
                     </ul>
 
