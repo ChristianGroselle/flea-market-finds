@@ -1,17 +1,43 @@
-import React from "react";
-import { useLocation } from "react-router-dom";
-import PropTypes from "prop-types";
+import React, { useEffect } from "react";
+import ProductItem from "../ProductItem";
+import { useDispatch, useSelector } from "react-redux";
+import { UPDATE_PRODUCTS } from "../../utils/actions";
+import { useQuery } from "@apollo/client";
+import { QUERY_PRODUCTS } from "../../utils/queries";
+import { idbPromise } from "../../utils/helpers";
+import spinner from "../../assets/spinner.gif";
+import { QUERY_BOOTH_WITH_PRODUCTS } from "../../utils/queries";
 
-const TestComp = () => {
-  const location = useLocation();
-  const queryParams = new URLSearchParams(location.search);
-  // Check if the "name" query parameter is present
-  const name = queryParams.get("c");
-  if (name) {
-    return <h1>Category, {name}!</h1>;
-  } else {
-    return <h1>Category, not found!</h1>;
+function TestComp({ _id }) {
+  const { loading, error, data } = useQuery(QUERY_BOOTH_WITH_PRODUCTS, {
+    variables: { _id },
+  });
+
+  if (loading) {
+    return <p>Loading...</p>;
   }
-};
+
+  if (error) {
+    return <p>Error: {error.message}</p>;
+  }
+  console.log("data: ", data);
+  const boothData = data.boothWithProducts;
+  const productArr = boothData.product;
+
+  return (
+    <>
+      <h2>{data.boothName}</h2>
+      <p>{data.description}</p>
+      {productArr.map((products) => (
+        <div key={products._id}>
+          <h3>{products.name}</h3>
+          <p>{products.description}</p>
+          {/* <img src={product.image} alt={product.name} /> */}
+          <p>Price: ${products.price}</p>
+        </div>
+      ))}
+    </>
+  );
+}
 
 export default TestComp;

@@ -86,3 +86,34 @@ export const QUERY_USER = gql`
     }
   }
 `;
+
+export const QUERY_BOOTH_WITH_PRODUCTS = gql`
+  query BoothWithProducts($id: ID!) {
+    boothWithProducts(_id: $id) {
+      boothName
+      description
+      product {
+        _id
+        name
+        description
+        image
+        price
+        quantity
+      }
+    }
+  }
+`;
+// {
+//   booth(_id: $id) {
+//     boothName
+//     description
+//     product {
+//       _id
+//       name
+//       description
+//       price
+//       quantity
+//     }
+//   }
+// }
+// `

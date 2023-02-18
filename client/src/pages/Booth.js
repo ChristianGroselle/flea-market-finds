@@ -11,6 +11,8 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 
+import TestComp from "../components/TestComp";
+
 const Booth = () => {
   const [searchText, setSearchText] = useState("");
 
@@ -43,7 +45,7 @@ const Booth = () => {
         </Container>
       </Navbar>
       <Container>
-        <ProductList searchText={searchText} />
+        <ProductList id="63f01e8d33a4767e499f10a6" searchText={searchText} />
       </Container>
     </>
   );

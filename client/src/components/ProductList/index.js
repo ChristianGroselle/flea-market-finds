@@ -6,22 +6,28 @@ import { useQuery } from "@apollo/client";
 import { QUERY_PRODUCTS } from "../../utils/queries";
 import { idbPromise } from "../../utils/helpers";
 import spinner from "../../assets/spinner.gif";
+import { QUERY_BOOTH_WITH_PRODUCTS } from "../../utils/queries";
 
-function ProductList({ searchText, selectedCategory }) {
+function ProductList({ id, searchText, selectedCategory }) {
   const dispatch = useDispatch();
+
   const state = useSelector((state) => state);
 
   const { products, currentCategory } = state;
 
-  const { loading, data } = useQuery(QUERY_PRODUCTS);
+  const { loading, error, data } = useQuery(QUERY_BOOTH_WITH_PRODUCTS, {
+    variables: { id },
+  });
 
   useEffect(() => {
     if (data) {
+      const boothData = data.boothWithProducts;
+      const productArr = boothData.product;
       dispatch({
         type: UPDATE_PRODUCTS,
-        products: data.products,
+        products: productArr,
       });
-      data.products.forEach((product) => {
+      productArr.forEach((product) => {
         idbPromise("products", "put", product);
       });
     } else if (!loading) {
@@ -56,6 +62,10 @@ function ProductList({ searchText, selectedCategory }) {
     }
 
     return filteredProducts;
+  }
+
+  if (!data) {
+    return <p>Loading...</p>;
   }
 
   return (

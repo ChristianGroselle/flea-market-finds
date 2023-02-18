@@ -89,8 +89,9 @@ const resolvers = {
 
       return { session: session.id };
     },
-    booth: async (parent, { _id }) => {
-      return await Booth.findById(_id).populate("product");
+    boothWithProducts: async (parent, { _id }, context) => {
+      const booth = await Booth.findById(_id).populate("product");
+      return booth;
     },
   },
   Mutation: {
