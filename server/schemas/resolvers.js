@@ -92,6 +92,16 @@ const resolvers = {
     booth: async (parent, { _id }) => {
       return await Booth.findById(_id).populate("product");
     },
+    booth: async (parent) => {
+      return await Booth.find();
+    },
+    userBooths: async (parent, args, context) => {
+      return await Booth.find({
+        where: {
+          owner: context.user._id,
+        },
+      });
+    },
   },
   Mutation: {
     addUser: async (parent, args) => {
@@ -99,6 +109,17 @@ const resolvers = {
       const token = signToken(user);
 
       return { token, user };
+    },
+    addBooth: async (parent, args, context) => {
+      const booth = await Booth.create({
+        boothName: args.boothName,
+        description: args.description,
+        logo: args.logo,
+        owner: context.user._id,
+      });
+      // const token = signToken(booth);
+
+      return booth;
     },
     addOrder: async (parent, { products }, context) => {
       console.log(context);
