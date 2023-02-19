@@ -16,19 +16,25 @@ import { QUERY_PRODUCTS } from "../../utils/queries";
 import { idbPromise } from "../../utils/helpers";
 import spinner from "../../assets/spinner.gif";
 import ProductList from "../ProductListLegacy";
+import { Link } from "react-router-dom";
 
 import ProductListPreview from "../ProductListPreview";
 
-const BoothPreview = () => {
+const BoothPreview = (props) => {
   return (
     <>
       <Container>
         <Card style={{ height: "100%", width: "100%" }}>
           <Card.Header style={{ textAlign: "left" }} as="h3">
             <Stack direction="horizontal" gap={3}>
-              <div>Booth Name</div>
+              <div>{props.booth.boothName}</div>
               <div className="vr" />
-              <Button>Visit</Button>
+              <Link
+                className="btn btn-primary"
+                to={"/booth/" + props.booth._id}
+              >
+                Visit
+              </Link>
             </Stack>
           </Card.Header>
           <Card.Body>

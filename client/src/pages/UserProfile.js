@@ -80,7 +80,7 @@ const UserProfile = () => {
               })}
             </li>
             <li>Booths Owned (Work in Progress): {user.boothsOwned}</li>
-            <li>Booths Managing (Work in Progress): {user.boothsManaging}</li>
+            {/* <li>Booths Managing (Work in Progress): {user.boothsManaging}</li> */}
           </ul>
 
           <h4>User Profile Functions</h4>

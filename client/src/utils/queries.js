@@ -53,9 +53,16 @@ export const QUERY_BOOTH = gql`
     booth {
       _id
       boothName
-      owner
-      accountManager
-      product
+      owner {
+        username
+      }
+      accountManager {
+        username
+      }
+      product {
+        name
+        image
+      }
       description
       logo
     }
@@ -92,6 +99,43 @@ export const USER_BOOTHS = gql`
       boothName
       description
       logo
+    }
+  }
+`;
+
+export const QUERY_BOOTHS = gql`
+  {
+    booths {
+      _id
+      boothName
+      owner {
+        username
+      }
+
+      accountManager {
+        username
+      }
+      product {
+        name
+        image
+      }
+      description
+      logo
+    }
+  }
+`;
+
+export const USER_ORDERS = gql`
+  {
+    userOrders {
+      purchaseDate
+      products {
+        name
+        description
+        price
+        image
+        quantity
+      }
     }
   }
 `;
