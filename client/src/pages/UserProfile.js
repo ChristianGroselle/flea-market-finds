@@ -40,7 +40,7 @@ const UserProfile = () => {
   };
 
   return (
-    <div className="container my-1">
+    <div className="userProfile container my-1">
       {user ? (
         <>
           <h2>
