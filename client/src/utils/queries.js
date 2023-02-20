@@ -86,6 +86,7 @@ export const QUERY_USER = gql`
     }
   }
 `;
+<<<<<<< HEAD
 
 export const QUERY_BOOTH_WITH_PRODUCTS = gql`
   query BoothWithProducts($id: ID!) {
@@ -117,3 +118,14 @@ export const QUERY_BOOTH_WITH_PRODUCTS = gql`
 //   }
 // }
 // `
+=======
+export const USER_BOOTHS = gql`
+  {
+    userBooths {
+      boothName
+      description
+      logo
+    }
+  }
+`;
+>>>>>>> 07cbbca28324ab2407a0deb42b07859012600a41

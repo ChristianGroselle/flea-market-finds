@@ -66,6 +66,8 @@ const typeDefs = gql`
     checkout(products: [ID]!): Checkout
     booth(_id: ID!): Booth
     boothWithProducts(_id: ID!): Booth
+    booths: [Booth]
+    userBooths: [Booth]
   }
 
   type Mutation {
