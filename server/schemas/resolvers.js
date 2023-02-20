@@ -1,4 +1,5 @@
 const { AuthenticationError } = require("apollo-server-express");
+const { strict } = require("assert");
 const { User, Product, Category, Order, Booth } = require("../models");
 const { signToken } = require("../utils/auth");
 require("dotenv").config();
@@ -53,6 +54,19 @@ const resolvers = {
 
       throw new AuthenticationError("Not logged in");
     },
+    userOrders: async (parent, args, context) => {
+      if (context.user) {
+        const user = await Order.find({
+          where: {
+            customerId: context.user._id,
+          },
+        }).populate("product");
+
+        return user;
+      }
+
+      throw new AuthenticationError("Not logged in");
+    },
     checkout: async (parent, args, context) => {
       const url = new URL(context.headers.referer).origin;
       const order = new Order({ products: args.products });
@@ -92,8 +106,11 @@ const resolvers = {
     booth: async (parent, { _id }) => {
       return await Booth.findById(_id).populate("product");
     },
-    booth: async (parent) => {
-      return await Booth.find();
+    booths: async (parent) => {
+      return await Booth.find().populate({
+        path: "user",
+        strictPopulate: false,
+      });
     },
     userBooths: async (parent, args, context) => {
       return await Booth.find({

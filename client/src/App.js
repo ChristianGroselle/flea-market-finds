@@ -59,7 +59,7 @@ function App() {
               <Route path="/success" element={<Success />} />
               <Route path="/orderHistory" element={<OrderHistory />} />
               <Route path="/products/:id" element={<Detail />} />
-              <Route path="/booth" element={<Booth />} />
+              <Route path="/booth/:id" element={<Booth />} />
               <Route path="/userProfile" element={<UserProfile />} />
               <Route path="*" element={<NoMatch />} />
               <Route path="/boothCreation" element={<BoothCreation />} />

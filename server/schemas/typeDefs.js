@@ -40,6 +40,7 @@ const typeDefs = gql`
   }
 
   type Booth {
+    _id: String
     boothName: String
     owner: [User]
     accountManager: [User]
@@ -63,6 +64,7 @@ const typeDefs = gql`
     product(_id: ID!): Product
     user: User
     order(_id: ID!): Order
+    userOrders: [Order]
     checkout(products: [ID]!): Checkout
     booth(_id: ID!): Booth
     booths: [Booth]

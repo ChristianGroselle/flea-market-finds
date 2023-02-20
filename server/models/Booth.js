@@ -1,42 +1,44 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const { Schema } = mongoose;
-const bcrypt = require('bcrypt');
-const User = require('./User');
-const Product = require('./Product');
+const bcrypt = require("bcrypt");
+const User = require("./User");
+const Product = require("./Product");
 
 const boothSchema = new Schema({
   boothName: {
     type: String,
     required: true,
     trim: true,
-    unique: true
+    unique: true,
   },
-  owner:{
-    type: Schema.Types.ObjectId,
-    ref: 'User'
+  owner: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "User",
     },
+  ],
   accountManager: [
     {
-        type: Schema.Types.ObjectId,
-        ref: 'User'
-    }
+      type: Schema.Types.ObjectId,
+      ref: "User",
+    },
   ],
   product: [
     {
-        type: Schema.Types.ObjectId,
-        ref: 'Product'
-    }
+      type: Schema.Types.ObjectId,
+      ref: "Product",
+    },
   ],
   description: {
     type: String,
-    required: true
+    required: true,
   },
   logo: {
-    type: String
-  }
+    type: String,
+  },
 });
 
-const Booth = mongoose.model('Booth', boothSchema);
+const Booth = mongoose.model("Booth", boothSchema);
 
 module.exports = Booth;
