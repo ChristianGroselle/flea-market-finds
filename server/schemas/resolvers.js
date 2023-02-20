@@ -96,6 +96,15 @@ const resolvers = {
     booth: async (parent) => {
       return await Booth.find();
     },
+    booths: async () => {
+      try {
+        const booths = await Booth.find().populate("product");
+        return booths;
+      } catch (err) {
+        console.log(err);
+        throw new Error("Failed to get booths with products");
+      }
+    },
     userBooths: async (parent, args, context) => {
       return await Booth.find({
         where: {

@@ -40,6 +40,7 @@ const typeDefs = gql`
   }
 
   type Booth {
+    _id: ID
     boothName: String
     owner: [User]
     accountManager: [User]

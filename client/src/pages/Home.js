@@ -6,6 +6,9 @@ import Cart from "../components/Cart";
 
 import ProductListPreview from "../components/ProductListPreview";
 
+import TestComp from "../components/TestComp";
+import BoothStructure from "../components/BoothStructure";
+
 import {
   Card,
   CardGroup,
@@ -20,15 +23,7 @@ const Home = () => {
   return (
     <Container>
       <Row>
-        <Col xl="4" md="6" sm="12">
-          <BoothPreview />
-        </Col>
-        <Col xl="4" md="6" sm="12">
-          <BoothPreview />
-        </Col>
-        <Col xl="4" md="6" sm="12">
-          <BoothPreview />
-        </Col>
+        <BoothStructure />
       </Row>
       <Cart />
     </Container>

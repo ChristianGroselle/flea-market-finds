@@ -86,7 +86,15 @@ export const QUERY_USER = gql`
     }
   }
 `;
-<<<<<<< HEAD
+export const USER_BOOTHS = gql`
+  {
+    userBooths {
+      boothName
+      description
+      logo
+    }
+  }
+`;
 
 export const QUERY_BOOTH_WITH_PRODUCTS = gql`
   query BoothWithProducts($id: ID!) {
@@ -104,28 +112,21 @@ export const QUERY_BOOTH_WITH_PRODUCTS = gql`
     }
   }
 `;
-// {
-//   booth(_id: $id) {
-//     boothName
-//     description
-//     product {
-//       _id
-//       name
-//       description
-//       price
-//       quantity
-//     }
-//   }
-// }
-// `
-=======
-export const USER_BOOTHS = gql`
-  {
-    userBooths {
+
+export const QUERY_BOOTHS = gql`
+  query booths {
+    booths {
+      _id
       boothName
       description
-      logo
+      product {
+        _id
+        name
+        description
+        image
+        price
+        quantity
+      }
     }
   }
 `;
->>>>>>> 07cbbca28324ab2407a0deb42b07859012600a41
