@@ -7,6 +7,9 @@ const stripe = require("stripe")(process.env.STRIPE_PRIVATE_KEY);
 
 const resolvers = {
   Query: {
+    users: async () => {
+      return await User.find();
+    },
     categories: async () => {
       return await Category.find();
     },
