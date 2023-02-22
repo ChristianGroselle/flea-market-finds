@@ -15,13 +15,10 @@ function ProductListPreview({ id, searchText, selectedCategory }) {
 
   const { products, booths, currentCategory } = state;
 
-  const { loading, error, data } = useQuery(QUERY_BOOTHS, {
-    variables: { id },
-  });
+  const { loading, error, data } = useQuery(QUERY_BOOTHS, {});
 
   useEffect(() => {
     if (data) {
-      console.log("PrevList", data);
       const boothData = data.booths;
       dispatch({
         type: UPDATE_BOOTHS,
@@ -43,7 +40,6 @@ function ProductListPreview({ id, searchText, selectedCategory }) {
   function filterProducts() {
     let filteredProducts = [];
 
-    console.log("test booths", booths);
     booths.forEach((booth) => {
       if (booth._id == id) {
         filteredProducts = booth.product;
@@ -71,8 +67,6 @@ function ProductListPreview({ id, searchText, selectedCategory }) {
 
     // Limit the number of products to 4
     filteredProducts = filteredProducts.slice(-4);
-
-    console.log(id, filteredProducts);
 
     return filteredProducts;
   }

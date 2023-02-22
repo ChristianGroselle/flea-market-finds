@@ -33,7 +33,7 @@ const BoothPreview = ({ id, name }) => {
             </Stack>
           </Card.Header>
           <Card.Body>
-            <Row xs={1} sm={2} md={4}>
+            <Row>
               <ProductListPreview id={id} />
             </Row>
           </Card.Body>
