@@ -99,6 +99,7 @@ export const USER_BOOTHS = gql`
 export const QUERY_BOOTH_WITH_PRODUCTS = gql`
   query BoothWithProducts($id: ID!) {
     boothWithProducts(_id: $id) {
+      _id
       boothName
       description
       product {

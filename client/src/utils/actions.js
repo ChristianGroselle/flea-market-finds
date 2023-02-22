@@ -1,12 +1,6 @@
 export const UPDATE_PRODUCTS = "UPDATE_PRODUCTS";
 
-export const updateProducts = (boothId, products) => {
-  return {
-    type: UPDATE_PRODUCTS,
-    boothId,
-    products,
-  };
-};
+export const UPDATE_BOOTHS = "UPDATE_BOOTHS";
 
 export const UPDATE_BOOTH_PRODUCTS = "UPDATE_BOOTH_PRODUCTS";
 

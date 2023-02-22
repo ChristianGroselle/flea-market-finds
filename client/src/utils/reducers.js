@@ -2,6 +2,7 @@
 import {
   UPDATE_PRODUCTS,
   UPDATE_BOOTH_PRODUCTS,
+  UPDATE_BOOTHS,
   ADD_TO_CART,
   UPDATE_CART_QUANTITY,
   REMOVE_FROM_CART,
@@ -18,6 +19,7 @@ const initialState = {
   cartOpen: false,
   categories: [],
   currentCategory: "",
+  booths: [],
 };
 
 export const reducer = (state = initialState, action) => {
@@ -25,13 +27,7 @@ export const reducer = (state = initialState, action) => {
     case UPDATE_PRODUCTS:
       return {
         ...state,
-        booths: state.booths.map((booth) => {
-          if (booth.id === action.boothId) {
-            return { ...booth, products: [...action.products] };
-          } else {
-            return booth;
-          }
-        }),
+        products: [...action.products],
       };
 
     case UPDATE_BOOTH_PRODUCTS:
@@ -40,6 +36,11 @@ export const reducer = (state = initialState, action) => {
         products: state.products.filter(
           (product) => product.boothId === action.boothId
         ),
+      };
+    case UPDATE_BOOTHS:
+      return {
+        ...state,
+        booths: [...action.booths],
       };
 
     case ADD_TO_CART:
