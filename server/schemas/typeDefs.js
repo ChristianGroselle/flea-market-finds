@@ -40,7 +40,7 @@ const typeDefs = gql`
   }
 
   type Booth {
-    _id: String
+    _id: ID
     boothName: String
     owner: [User]
     accountManager: [User]
@@ -59,7 +59,7 @@ const typeDefs = gql`
   }
 
   type Query {
-    categories: String
+    categories: [Category]
     products(category: ID, name: String): [Product]
     product(_id: ID!): Product
     user: User
@@ -67,7 +67,8 @@ const typeDefs = gql`
     order(_id: ID!): Order
     userOrders: [Order]
     checkout(products: [ID]!): Checkout
-    booth(id: ID): Booth
+    booth(_id: ID): Booth
+    boothWithProducts(_id: ID!): Booth
     booths: [Booth]
     userBooths: [Booth]
   }

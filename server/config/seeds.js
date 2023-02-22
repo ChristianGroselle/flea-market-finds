@@ -162,7 +162,24 @@ db.once("open", async () => {
         },
       ],
     },
-    { boothName: "Worker Booth", description: "fun work items" },
+    {
+      boothName: "Worker Booth",
+      description: "fun work items",
+      product: [
+        {
+          _id: products[5]._id,
+        },
+        {
+          _id: products[7]._id,
+        },
+        {
+          _id: products[3]._id,
+        },
+        {
+          _id: products[6]._id,
+        },
+      ],
+    },
   ]);
 
   // const booths = await Booth.insertMany([

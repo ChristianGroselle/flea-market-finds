@@ -13,17 +13,22 @@ import NavDropdown from "react-bootstrap/NavDropdown";
 import { useParams } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 
-import { QUERY_BOOTH } from "../utils/queries";
+import { QUERY_BOOTH_WITH_PRODUCTS } from "../utils/queries";
+
+import TestComp from "../components/TestComp";
 
 const Booth = () => {
   const [searchText, setSearchText] = useState("");
 
-  const { id } = useParams();
+  let { id } = useParams();
+  console.log("param", id);
 
-  const { loading, data } = useQuery(QUERY_BOOTH, {
-    variables: { id: id.toString() },
+  id = id.trim();
+
+  const { loading, error, data } = useQuery(QUERY_BOOTH_WITH_PRODUCTS, {
+    variables: { id },
   });
-  console.log(data);
+  console.log("data", data);
   const handleSearchChange = (event) => {
     setSearchText(event.target.value);
   };
@@ -53,7 +58,7 @@ const Booth = () => {
         </Container>
       </Navbar>
       <Container>
-        <ProductList searchText={searchText} />
+        <ProductList id={id} searchText={searchText} />
       </Container>
     </>
   );

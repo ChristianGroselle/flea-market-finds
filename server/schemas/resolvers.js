@@ -106,15 +106,21 @@ const resolvers = {
 
       return { session: session.id };
     },
-    booth: async (parent, { id }) => {
-      console.log(id);
-      return await Booth.findOne({ _id: id }).populate("product");
+    boothWithProducts: async (parent, { _id }, context) => {
+      const booth = await Booth.findById(_id).populate("product");
+      return booth;
     },
-    booths: async (parent) => {
-      return await Booth.find().populate({
-        path: "user",
-        strictPopulate: false,
-      });
+    booth: async (parent) => {
+      return await Booth.find();
+    },
+    booths: async () => {
+      try {
+        const booths = await Booth.find().populate("product");
+        return booths;
+      } catch (err) {
+        console.log(err);
+        throw new Error("Failed to get booths with products");
+      }
     },
     userBooths: async (parent, args, context) => {
       return await Booth.find({

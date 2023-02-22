@@ -8,6 +8,9 @@ import { QUERY_BOOTHS } from "../utils/queries";
 
 import ProductListPreview from "../components/ProductListPreview";
 
+import TestComp from "../components/TestComp";
+import BoothStructure from "../components/BoothStructure";
+
 import {
   Card,
   CardGroup,
@@ -24,14 +27,7 @@ const Home = () => {
   return (
     <Container>
       <Row>
-        {allBooth.loading == false &&
-          allBooth.data.booths.map((booth) => {
-            return (
-              <Col xl="4" md="6" sm="12">
-                <BoothPreview booth={booth} />
-              </Col>
-            );
-          })}
+        <BoothStructure />
       </Row>
       <Cart />
     </Container>
