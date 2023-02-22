@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const { Schema } = mongoose;
 
@@ -6,49 +6,51 @@ const productSchema = new Schema({
   name: {
     type: String,
     required: true,
-    trim: true
+    trim: true,
   },
   description: {
-    type: String
+    type: String,
   },
   image: {
-    type: String
+    type: String,
   },
   price: {
     type: Number,
     required: true,
-    min: 0.99
+    min: 0.99,
   },
   quantity: {
     type: Number,
     min: 0,
-    default: 1
+    default: 1,
   },
   category: [
     {
       type: Schema.Types.ObjectId,
-      ref: 'Category',
-      required: true
-    }
+      ref: "Category",
+      required: true,
+    },
   ],
   condition: {
     type: String,
-    required: true
+    required: true,
   },
   createdAt: {
     type: Date,
     default: Date.now,
-    get: (date) => { if (date) return date.toISOString().split("T") [0] }
+    get: (date) => {
+      if (date) return date.toISOString().split("T")[0];
+    },
   },
   discountTimerOn: {
-    type: Boolean
-  }
+    type: Boolean,
+  },
 });
 
-const Product = mongoose.model('Product', productSchema);
+const Product = mongoose.model("Product", productSchema);
 
 module.exports = Product;
 
 // how to store images and let users upload images??
 // this is tricky. We'll have to convert the images into their binary string. Then pull it out of the database, and configure how we want to dislpay the image.
-// we can use GridFS to break the file into multiple chuncks. Then we can get 
+// we can use GridFS to break the file into multiple chuncks. Then we can get

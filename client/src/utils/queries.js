@@ -1,4 +1,4 @@
-import { gql } from '@apollo/client';
+import { gql } from "@apollo/client";
 
 export const QUERY_PRODUCTS = gql`
   query getProducts($category: ID) {
@@ -48,9 +48,49 @@ export const QUERY_CATEGORIES = gql`
   }
 `;
 
+// export const QUERY_BOOTH = gql`
+//   {
+//     query booth ($id: ID!) {
+//       booth(id: $id){
+//     _id
+//       boothName
+//       owner {
+//         username
+//       }
+//       product {
+//         name
+//         image
+//       }
+//       description
+//       logo
+//       }
+
+//     }
+//   }
+// `;
+
+export const QUERY_BOOTH = gql`
+  query getBooth($id: ID) {
+    booth(id: $id) {
+      _id
+      boothName
+      owner {
+        username
+      }
+      product {
+        name
+        image
+      }
+      description
+      logo
+    }
+  }
+`;
+
 export const QUERY_USER = gql`
   {
     user {
+      _id
       firstName
       lastName
       username
@@ -68,6 +108,67 @@ export const QUERY_USER = gql`
         }
       }
       createdAt
+    }
+  }
+`;
+export const USER_ORDERS = gql`
+  {
+    userOrders {
+      purchaseDate
+      products {
+        name
+        description
+        price
+        image
+        quantity
+      }
+    }
+  }
+`;
+
+export const QUERY_BOOTH_WITH_PRODUCTS = gql`
+  query BoothWithProducts($id: ID!) {
+    boothWithProducts(_id: $id) {
+      _id
+      boothName
+      description
+      product {
+        _id
+        name
+
+        description
+        image
+        price
+        quantity
+      }
+    }
+  }
+`;
+
+export const QUERY_BOOTHS = gql`
+  query booths {
+    booths {
+      _id
+      boothName
+      description
+      product {
+        _id
+        name
+        description
+        image
+        price
+        quantity
+      }
+    }
+  }
+`;
+
+export const USER_BOOTHS = gql`
+  {
+    userBooths {
+      boothName
+      description
+      logo
     }
   }
 `;

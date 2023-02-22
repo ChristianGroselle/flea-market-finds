@@ -12,6 +12,7 @@
     "develop": "concurrently \"cd server && npm run watch\" \"cd client && npm start\"",
     "install": "cd server && npm i && cd ../client && npm i",
     "seed": "cd server && npm run seed",
+    "seed_test": "cd server && node config/seeds-liane.js",
     "build": "cd client && npm run build"
   },
   "keywords": [],
@@ -19,5 +20,8 @@
   "license": "ISC",
   "devDependencies": {
     "concurrently": "^5.1.0"
+  },
+  "dependencies": {
+    "dotenv": "^16.0.3"
   }
 }

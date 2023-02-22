@@ -1,9 +1,9 @@
-const { gql } = require('apollo-server-express');
+const { gql } = require("apollo-server-express");
 
 const typeDefs = gql`
   type Category {
     _id: ID
-    name: String,
+    name: String
   }
 
   type Product {
@@ -16,7 +16,7 @@ const typeDefs = gql`
     category: Category
     condition: String
     createdAt: String
-    discountTimerOn: Boolean 
+    discountTimerOn: Boolean
   }
 
   type Order {
@@ -40,7 +40,8 @@ const typeDefs = gql`
   }
 
   type Booth {
-    boothName: String,
+    _id: ID
+    boothName: String
     owner: [User]
     accountManager: [User]
     product: [Product]
@@ -62,16 +63,38 @@ const typeDefs = gql`
     products(category: ID, name: String): [Product]
     product(_id: ID!): Product
     user: User
+    users: [User]
     order(_id: ID!): Order
+    userOrders: [Order]
     checkout(products: [ID]!): Checkout
-    booth(_id: ID!): Booth
+    booth(_id: ID): Booth
+    boothWithProducts(_id: ID!): Booth
+    booths: [Booth]
+    userBooths: [Booth]
   }
 
   type Mutation {
-    addUser(firstName: String!, lastName: String!, username: String!, email: String!, password: String!): Auth
-    updateUser(firstName: String, lastName: String, email: String, password: String): User
-    deleteUser(firstName: String!, lastName: String!, username: String!, email: String!, password: String!): Auth
-    
+    addUser(
+      firstName: String!
+      lastName: String!
+      username: String!
+      email: String!
+      password: String!
+    ): Auth
+    updateUser(
+      firstName: String
+      lastName: String
+      email: String
+      password: String
+    ): User
+    deleteUser(
+      firstName: String!
+      lastName: String!
+      username: String!
+      email: String!
+      password: String!
+    ): Auth
+
     login(email: String!, password: String!): Auth
 
     addOrder(products: [ID]!): Order
@@ -80,9 +103,21 @@ const typeDefs = gql`
     updateBooth(boothName: String!, description: String!, logo: String): Booth
     deleteBooth(boothName: String!, description: String!, logo: String): Booth
 
-    addProduct(name: String!, price: Float!, image: String, category: [String]!, condition: String!): Product
+    addProduct(
+      name: String!
+      price: Float!
+      image: String
+      category: [String]!
+      condition: String!
+    ): Product
     updateProduct(_id: ID!, quantity: Int!): Product
-    deleteProduct(name: String!, price: Float!, image: String, category: [String]!, condition: String!): Product
+    deleteProduct(
+      name: String!
+      price: Float!
+      image: String
+      category: [String]!
+      condition: String!
+    ): Product
   }
 `;
 

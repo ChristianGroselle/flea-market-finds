@@ -1,0 +1,67 @@
+import React, { useState } from "react";
+import ProductList from "../components/ProductList";
+import CategoryDropDown from "../components/CategoryDropDown";
+
+import Button from "react-bootstrap/Button";
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import Form from "react-bootstrap/Form";
+import Nav from "react-bootstrap/Nav";
+import Navbar from "react-bootstrap/Navbar";
+import NavDropdown from "react-bootstrap/NavDropdown";
+import { useParams } from "react-router-dom";
+import { useQuery } from "@apollo/client";
+
+import { QUERY_BOOTH_WITH_PRODUCTS } from "../utils/queries";
+
+import TestComp from "../components/TestComp";
+
+const Booth = () => {
+  const [searchText, setSearchText] = useState("");
+
+  let { id } = useParams();
+  console.log("param", id);
+
+  id = id.trim();
+
+  const { loading, error, data } = useQuery(QUERY_BOOTH_WITH_PRODUCTS, {
+    variables: { id },
+  });
+  console.log("data", data);
+  const handleSearchChange = (event) => {
+    setSearchText(event.target.value);
+  };
+
+  return (
+    <>
+      <Navbar bg="light" expand="lg">
+        <Container fluid>
+          <Navbar.Brand href="#">Booth Name</Navbar.Brand>
+          <Navbar.Toggle aria-controls="navbarScroll" />
+          <Navbar.Collapse id="navbarScroll">
+            <Nav
+              className="me-auto my-2 my-lg-0"
+              style={{ maxHeight: "100px" }}
+              navbarScroll
+            ></Nav>
+            <Form className="d-flex">
+              <Form.Control
+                type="text"
+                placeholder="Search products"
+                value={searchText}
+                onChange={handleSearchChange}
+              />
+            </Form>
+            <CategoryDropDown />
+          </Navbar.Collapse>
+        </Container>
+      </Navbar>
+      <Container>
+        <ProductList id={id} searchText={searchText} />
+      </Container>
+    </>
+  );
+};
+
+export default Booth;
