@@ -48,15 +48,33 @@ export const QUERY_CATEGORIES = gql`
   }
 `;
 
+// export const QUERY_BOOTH = gql`
+//   {
+//     query booth ($id: ID!) {
+//       booth(id: $id){
+//     _id
+//       boothName
+//       owner {
+//         username
+//       }
+//       product {
+//         name
+//         image
+//       }
+//       description
+//       logo
+//       }
+
+//     }
+//   }
+// `;
+
 export const QUERY_BOOTH = gql`
-  {
-    booth {
+  query getBooth($id: ID) {
+    booth(id: $id) {
       _id
       boothName
       owner {
-        username
-      }
-      accountManager {
         username
       }
       product {

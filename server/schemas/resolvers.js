@@ -106,8 +106,9 @@ const resolvers = {
 
       return { session: session.id };
     },
-    booth: async (parent, { _id }) => {
-      return await Booth.findById(_id).populate("product");
+    booth: async (parent, { id }) => {
+      console.log(id);
+      return await Booth.findOne({ _id: id }).populate("product");
     },
     booths: async (parent) => {
       return await Booth.find().populate({

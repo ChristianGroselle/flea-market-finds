@@ -10,10 +10,20 @@ import Form from "react-bootstrap/Form";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
+import { useParams } from "react-router-dom";
+import { useQuery } from "@apollo/client";
+
+import { QUERY_BOOTH } from "../utils/queries";
 
 const Booth = () => {
   const [searchText, setSearchText] = useState("");
 
+  const { id } = useParams();
+
+  const { loading, data } = useQuery(QUERY_BOOTH, {
+    variables: { id: id.toString() },
+  });
+  console.log(data);
   const handleSearchChange = (event) => {
     setSearchText(event.target.value);
   };
