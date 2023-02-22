@@ -48,14 +48,39 @@ export const QUERY_CATEGORIES = gql`
   }
 `;
 
+// export const QUERY_BOOTH = gql`
+//   {
+//     query booth ($id: ID!) {
+//       booth(id: $id){
+//     _id
+//       boothName
+//       owner {
+//         username
+//       }
+//       product {
+//         name
+//         image
+//       }
+//       description
+//       logo
+//       }
+
+//     }
+//   }
+// `;
+
 export const QUERY_BOOTH = gql`
-  {
-    booth {
+  query getBooth($id: ID) {
+    booth(id: $id) {
       _id
       boothName
-      owner
-      accountManager
-      product
+      owner {
+        username
+      }
+      product {
+        name
+        image
+      }
       description
       logo
     }
@@ -86,12 +111,17 @@ export const QUERY_USER = gql`
     }
   }
 `;
-export const USER_BOOTHS = gql`
+export const USER_ORDERS = gql`
   {
-    userBooths {
-      boothName
-      description
-      logo
+    userOrders {
+      purchaseDate
+      products {
+        name
+        description
+        price
+        image
+        quantity
+      }
     }
   }
 `;
@@ -105,6 +135,7 @@ export const QUERY_BOOTH_WITH_PRODUCTS = gql`
       product {
         _id
         name
+
         description
         image
         price
@@ -128,6 +159,16 @@ export const QUERY_BOOTHS = gql`
         price
         quantity
       }
+    }
+  }
+`;
+
+export const USER_BOOTHS = gql`
+  {
+    userBooths {
+      boothName
+      description
+      logo
     }
   }
 `;

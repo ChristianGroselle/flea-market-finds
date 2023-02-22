@@ -74,7 +74,6 @@ function ProductListPreview({ id, searchText, selectedCategory }) {
   if (!data) {
     return <p>Loading...</p>;
   }
-  console.log("list", filterProducts());
 
   return (
     <>

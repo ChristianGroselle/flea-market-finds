@@ -38,7 +38,6 @@ function ProductItem(item) {
       idbPromise("cart", "put", { ...item, purchaseQuantity: 1 });
     }
   };
-  console.log("item");
 
   return (
     <Card

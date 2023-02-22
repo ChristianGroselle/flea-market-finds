@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import ProductItem from "../ProductItem";
 import { useDispatch, useSelector } from "react-redux";
-import { UPDATE_PRODUCTS } from "../../utils/actions";
+import { UPDATE_PRODUCTS, UPDATE_BOOTHS } from "../../utils/actions";
 import { useQuery } from "@apollo/client";
 import { QUERY_PRODUCTS } from "../../utils/queries";
 import { idbPromise } from "../../utils/helpers";
@@ -13,7 +13,7 @@ function ProductList({ id, searchText, selectedCategory }) {
 
   const state = useSelector((state) => state);
 
-  const { products, currentCategory } = state;
+  const { products, booths, currentCategory } = state;
 
   const { loading, error, data } = useQuery(QUERY_BOOTH_WITH_PRODUCTS, {
     variables: { id },
@@ -21,6 +21,7 @@ function ProductList({ id, searchText, selectedCategory }) {
 
   useEffect(() => {
     if (data) {
+      console.log("data", data);
       const boothData = data.boothWithProducts;
       const productArr = boothData.product;
       dispatch({

@@ -1,11 +1,13 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React from "react";
+import { Link } from "react-router-dom";
 
-import { useQuery } from '@apollo/client';
-import { QUERY_USER } from '../utils/queries';
+import { useQuery } from "@apollo/client";
+import { QUERY_USER, USER_ORDERS } from "../utils/queries";
 
 function OrderHistory() {
   const { data } = useQuery(QUERY_USER);
+  const { allOrder } = useQuery(USER_ORDERS);
+  console.log(allOrder);
   let user;
 
   if (data) {

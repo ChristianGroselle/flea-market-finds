@@ -16,6 +16,7 @@ import { QUERY_PRODUCTS } from "../../utils/queries";
 import { idbPromise } from "../../utils/helpers";
 import spinner from "../../assets/spinner.gif";
 import ProductList from "../ProductListLegacy";
+import { Link } from "react-router-dom";
 
 import ProductListPreview from "../ProductListPreview";
 console.log("preview");
@@ -29,7 +30,9 @@ const BoothPreview = ({ id, name }) => {
             <Stack direction="horizontal" gap={3}>
               <div>{name}</div>
               <div className="vr" />
-              <Button>Visit</Button>
+              <Link className="btn btn-primary" to={"/booth/" + id}>
+                Visit
+              </Link>
             </Stack>
           </Card.Header>
           <Card.Body>

@@ -1,4 +1,5 @@
 const { AuthenticationError } = require("apollo-server-express");
+const { strict } = require("assert");
 const { User, Product, Category, Order, Booth } = require("../models");
 const { signToken } = require("../utils/auth");
 require("dotenv").config();
@@ -6,6 +7,9 @@ const stripe = require("stripe")(process.env.STRIPE_PRIVATE_KEY);
 
 const resolvers = {
   Query: {
+    users: async () => {
+      return await User.find();
+    },
     categories: async () => {
       return await Category.find();
     },
@@ -49,6 +53,19 @@ const resolvers = {
         });
 
         return user.orders.id(_id);
+      }
+
+      throw new AuthenticationError("Not logged in");
+    },
+    userOrders: async (parent, args, context) => {
+      if (context.user) {
+        const user = await Order.find({
+          where: {
+            customerId: context.user._id,
+          },
+        }).populate("product");
+
+        return user;
       }
 
       throw new AuthenticationError("Not logged in");

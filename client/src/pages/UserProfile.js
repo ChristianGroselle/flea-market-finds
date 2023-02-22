@@ -40,7 +40,7 @@ const UserProfile = () => {
   };
 
   return (
-    <div className="container my-1">
+    <div className="userProfile container my-1">
       {user ? (
         <>
           <h2>
@@ -80,7 +80,7 @@ const UserProfile = () => {
               })}
             </li>
             <li>Booths Owned (Work in Progress): {user.boothsOwned}</li>
-            <li>Booths Managing (Work in Progress): {user.boothsManaging}</li>
+            {/* <li>Booths Managing (Work in Progress): {user.boothsManaging}</li> */}
           </ul>
 
           <h4>User Profile Functions</h4>
