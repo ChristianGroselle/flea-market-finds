@@ -46,29 +46,31 @@ function ProductListPreview({ id, searchText, selectedCategory }) {
       } else {
       }
     });
+    if (filterProducts) {
+      if (currentCategory) {
+        filteredProducts = filteredProducts.filter(
+          (product) => product.category._id === currentCategory
+        );
+      }
 
-    if (currentCategory) {
-      filteredProducts = filteredProducts.filter(
-        (product) => product.category._id === currentCategory
-      );
+      if (selectedCategory) {
+        filteredProducts = filteredProducts.filter(
+          (product) => product.category._id === selectedCategory
+        );
+      }
+
+      if (searchText) {
+        filteredProducts = filteredProducts.filter((product) =>
+          product.name.toLowerCase().includes(searchText.toLowerCase())
+        );
+      }
+
+      // Limit the number of products to 4
+      filteredProducts = filteredProducts.slice(-4);
+
+      return filteredProducts;
     }
-
-    if (selectedCategory) {
-      filteredProducts = filteredProducts.filter(
-        (product) => product.category._id === selectedCategory
-      );
-    }
-
-    if (searchText) {
-      filteredProducts = filteredProducts.filter((product) =>
-        product.name.toLowerCase().includes(searchText.toLowerCase())
-      );
-    }
-
-    // Limit the number of products to 4
-    filteredProducts = filteredProducts.slice(-4);
-
-    return filteredProducts;
+    return null;
   }
 
   if (!data) {
@@ -77,7 +79,7 @@ function ProductListPreview({ id, searchText, selectedCategory }) {
 
   return (
     <>
-      {filterProducts().length ? (
+      {filterProducts() ? (
         <>
           {filterProducts().map((product) => (
             <PreviewItem
@@ -91,7 +93,7 @@ function ProductListPreview({ id, searchText, selectedCategory }) {
           ))}
         </>
       ) : (
-        <h3>You haven't added any products yet!</h3>
+        <h3>Empty Booth</h3>
       )}
       {loading ? <img src={spinner} alt="loading" /> : null}
     </>

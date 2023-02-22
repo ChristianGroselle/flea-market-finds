@@ -57,7 +57,9 @@ function ProductItem(item) {
         </Card.Body>
       </Card.Body>
       <Card.Footer className="text-muted">
-        <Button variant="primary">Add to cart</Button>
+        <Button variant="primary" onClick={addToCart}>
+          Add to cart
+        </Button>
       </Card.Footer>
     </Card>
   );

@@ -1,6 +1,15 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ProductList from "../components/ProductList";
 import CategoryDropDown from "../components/CategoryDropDown";
+import Cart from "../components/Cart";
+// import { useStoreContext } from '../utils/GlobalState';
+import { useDispatch, useSelector } from "react-redux";
+import {
+  REMOVE_FROM_CART,
+  UPDATE_CART_QUANTITY,
+  ADD_TO_CART,
+  UPDATE_PRODUCTS,
+} from "../utils/actions";
 
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
@@ -12,6 +21,7 @@ import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import { useParams } from "react-router-dom";
 import { useQuery } from "@apollo/client";
+import { idbPromise } from "../utils/helpers";
 
 import { QUERY_BOOTH_WITH_PRODUCTS } from "../utils/queries";
 
@@ -19,15 +29,44 @@ import TestComp from "../components/TestComp";
 
 const Booth = () => {
   const [searchText, setSearchText] = useState("");
+  const dispatch = useDispatch();
+  const state = useSelector((state) => state);
+  const { id } = useParams();
 
-  let { id } = useParams();
-  console.log("param", id);
+  const [currentProduct, setCurrentProduct] = useState({});
 
-  id = id.trim();
-
-  const { loading, error, data } = useQuery(QUERY_BOOTH_WITH_PRODUCTS, {
+  const { loading, data } = useQuery(QUERY_BOOTH_WITH_PRODUCTS, {
     variables: { id },
   });
+
+  const { products, cart } = state;
+
+  useEffect(() => {
+    // already in global store
+    if (products.length) {
+      setCurrentProduct(products.find((product) => product._id === id));
+    }
+    // retrieved from server
+    else if (data) {
+      dispatch({
+        type: UPDATE_PRODUCTS,
+        products: data.products,
+      });
+
+      data.products.forEach((product) => {
+        idbPromise("products", "put", product);
+      });
+    }
+    // get cache from idb
+    else if (!loading) {
+      idbPromise("products", "get").then((indexedProducts) => {
+        dispatch({
+          type: UPDATE_PRODUCTS,
+          products: indexedProducts,
+        });
+      });
+    }
+  }, [products, data, loading, dispatch, id]);
   console.log("data", data);
   const handleSearchChange = (event) => {
     setSearchText(event.target.value);
@@ -59,6 +98,7 @@ const Booth = () => {
       </Navbar>
       <Container>
         <ProductList id={id} searchText={searchText} />
+        <Cart />
       </Container>
     </>
   );

@@ -22,8 +22,6 @@ import {
 } from "react-bootstrap";
 
 const Home = () => {
-  const allBooth = useQuery(QUERY_BOOTHS);
-  console.log(allBooth);
   return (
     <Container>
       <Row>
