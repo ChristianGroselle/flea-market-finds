@@ -1,5 +1,5 @@
 {
-  "name": "flea-market-finds",
+  "name": "flea-market-finds-client",
   "version": "0.1.0",
   "private": true,
   "proxy": "http://localhost:3001/",
