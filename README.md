@@ -27,6 +27,9 @@ As a Seller
 I want to be able to sell gently used or old products
 I want to be able to chrage to customer
 I wamt to be able to send the product to my customer
+As a Customer
+I want to see all products by buyer
+I want to see find by keywords
 ```
 
 ## Acceptance Criteria
@@ -50,7 +53,7 @@ Then they should ship the purchase order
 
 The following is a Link to Deployed website from **Heroku**:
 
-[![ScreenShot of Application](./assets/MainScreenShot-small.png "Link to website")](https://mod19-c-pwa-text-editor.herokuapp.com/)
+[![ScreenShot of Application](./client/public/images/Screenshot%202023-02-23%20152456.png "Link to website")](https://flea-market-finds.herokuapp.com/)
 ***
 
 ## Installation
