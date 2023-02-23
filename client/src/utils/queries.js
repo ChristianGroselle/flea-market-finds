@@ -87,6 +87,24 @@ export const QUERY_BOOTH = gql`
   }
 `;
 
+export const QUERY_BOOTH_BY_IDS = gql`
+  query BoothsByIds($ids: [ID]!) {
+    boothsByIds(ids: $ids) {
+      _id
+      boothName
+      owner {
+        username
+      }
+      product {
+        name
+        image
+      }
+      description
+      logo
+    }
+  }
+`;
+
 export const QUERY_USER = gql`
   query {
     user {

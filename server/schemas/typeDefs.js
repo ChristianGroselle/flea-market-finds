@@ -70,6 +70,7 @@ const typeDefs = gql`
     booth(_id: ID): Booth
     boothWithProducts(_id: ID!): Booth
     booths: [Booth]
+    boothsByIds(ids: [ID]!): [Booth]
     userBooths: [Booth]
   }
 
@@ -87,7 +88,7 @@ const typeDefs = gql`
       email: String
       password: String
     ): User
-    updateUserBoothsOwned(userId: ID!, boothIds: [ID!]!): User
+    updateUserBoothsOwned(userId: ID!, boothId: ID!): User
     deleteUser(
       firstName: String!
       lastName: String!
@@ -102,7 +103,7 @@ const typeDefs = gql`
 
     addBooth(boothName: String!, description: String!, logo: String): Booth
     updateBooth(boothName: String!, description: String!, logo: String): Booth
-    deleteBooth(boothName: String!, description: String!, logo: String): Booth
+    deleteBooth(_id: ID!): Booth
 
     addProduct(
       name: String!

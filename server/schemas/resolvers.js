@@ -129,6 +129,10 @@ const resolvers = {
         },
       });
     },
+    boothsByIds: async (parent, { ids }) => {
+      const booths = await Booth.find({ _id: { $in: ids } });
+      return booths;
+    },
   },
   Mutation: {
     addUser: async (parent, args) => {
@@ -171,12 +175,33 @@ const resolvers = {
 
       throw new AuthenticationError("Not logged in");
     },
-    updateUserBoothsOwned: async (parent, { userId, boothIds }) => {
+    updateUserBoothsOwned: async (parent, { userId, boothId }) => {
       return await User.findByIdAndUpdate(
         userId,
-        { $push: { boothsOwned: { $each: boothIds } } },
+        { $addToSet: { boothsOwned: boothId } },
         { new: true }
       );
+    },
+    deleteBooth: async (parent, { _id }, context) => {
+      const { user } = context;
+      if (user) {
+        const booth = await Booth.findById(_id);
+        if (booth && booth.owner.toString() === user._id.toString()) {
+          await User.findByIdAndUpdate(
+            user._id,
+            { $pull: { boothsOwned: booth._id } },
+            { new: true }
+          );
+          await Booth.findByIdAndDelete(_id);
+          return booth;
+        } else {
+          throw new AuthenticationError("You are not the owner of this booth.");
+        }
+      } else {
+        throw new AuthenticationError(
+          "You need to be logged in to perform this action."
+        );
+      }
     },
     updateProduct: async (parent, { _id, quantity }) => {
       const decrement = Math.abs(quantity) * -1;
