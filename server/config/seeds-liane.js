@@ -5,6 +5,7 @@ const {
   getBoothArr,
   getProductArr,
   generateRandomNbrArr,
+  generateRandomNbrArr,
   getRandomArrItem,
   getRandomNumber,
 } = require("./data");
@@ -186,6 +187,7 @@ db.once("open", async () => {
 
   // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>Seed Booth with required
   // hold db booths
+  // const booths = await Booth.find();
   // const booths = await Booth.find();
   // console.log(booths);
   //  for every booth find the owners and update with boothid

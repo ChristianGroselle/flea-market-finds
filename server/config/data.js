@@ -189,6 +189,7 @@ const productArr = [
   {
     name: "Spinning Top",
     category: "Toys",
+    category: "Toys",
     description:
       "Spinning is one of the most classic toys in the past. Nowadays, it is also very hot and among kids. This is a portable mini spinning design",
     image: "spinning-top.jpg",
@@ -198,6 +199,7 @@ const productArr = [
   },
   {
     name: "Set of Plastic Horses",
+    category: "Toys",
     category: "Toys",
     description:
       "Vintage 42 Pcs. Marx Plastic Horses & Saddles Roy Rogers Fort Apache",
@@ -209,6 +211,7 @@ const productArr = [
   {
     name: "Teddy Bear",
     category: "Toys",
+    category: "Toys",
     description:
       "13.7 inches 3 Packs of Soft Stuffed Teddy Bear Plush Dolls, Children’s Sleeping and Playing Toys, Home Decorations",
     image: "teddy-bear.jpg",
@@ -218,6 +221,7 @@ const productArr = [
   },
   {
     name: "Alphabet Blocks",
+    category: "Toys",
     category: "Toys",
     description:
       "Spark. Create. Imagine. 40 pc ABC Blocks are desigend for young boys and girls from ages 18 months to 72 months.",
