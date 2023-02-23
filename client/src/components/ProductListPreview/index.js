@@ -66,7 +66,9 @@ function ProductListPreview({ id, searchText, selectedCategory }) {
       }
 
       // Limit the number of products to 4
-      filteredProducts = filteredProducts.slice(-4);
+      if (filteredProducts) {
+        filteredProducts = filteredProducts.slice(-4);
+      }
 
       return filteredProducts;
     }

@@ -97,7 +97,7 @@ const Booth = () => {
       thisBooth = booth;
     }
   });
-  const ownerTest = users?.boothsOwned.filter(
+  const ownerTest = users?.boothsOwned?.filter(
     (booth) => booth == thisBooth?._id
   );
 
