@@ -62,37 +62,6 @@ function PreviewItem(item) {
       <Col xs={12} sm={12} md={6}>
         <Card style={{ height: "100%", width: "100%" }}>
           <Card.Img src={`/images/${image}`} alt={name} />
-          <Card.ImgOverlay
-            style={{
-              transition: "background-color 0.5s ease",
-              backgroundColor: showOverlay
-                ? "rgba(255, 255, 255, 0.7)"
-                : "transparent",
-            }}
-            onMouseOver={handleMouseOver}
-            onMouseOut={handleMouseOut}
-          >
-            <OverlayTrigger
-              overlay={
-                <Stack
-                  direction="horizontal"
-                  gap={3}
-                  className="overlay-text"
-                  style={{
-                    margin: "-1rem 0",
-                    color: "black",
-                  }}
-                >
-                  <Card.Title>{name}</Card.Title>
-                  <div className="vr" />
-                  <Card.Text>{price}</Card.Text>
-                </Stack>
-              }
-              show={showOverlay}
-            >
-              <div className="card-overlay"></div>
-            </OverlayTrigger>
-          </Card.ImgOverlay>
         </Card>
       </Col>
     </>

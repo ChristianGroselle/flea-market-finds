@@ -88,7 +88,7 @@ export const QUERY_BOOTH = gql`
 `;
 
 export const QUERY_USER = gql`
-  {
+  query {
     user {
       _id
       firstName
@@ -111,6 +111,32 @@ export const QUERY_USER = gql`
     }
   }
 `;
+
+export const QUERY_USERS = gql`
+  {
+    users {
+      _id
+      firstName
+      lastName
+      username
+      email
+      createdAt
+      boothsOwned {
+        _id
+        boothName
+      }
+      orders {
+        _id
+        products {
+          _id
+          name
+          price
+        }
+      }
+    }
+  }
+`;
+
 export const USER_ORDERS = gql`
   {
     userOrders {

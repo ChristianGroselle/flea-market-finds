@@ -9,6 +9,7 @@ import {
   UPDATE_CART_QUANTITY,
   ADD_TO_CART,
   UPDATE_PRODUCTS,
+  UPDATE_BOOTHS,
 } from "../utils/actions";
 
 import {
@@ -26,66 +27,58 @@ import { useParams } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 import { idbPromise } from "../utils/helpers";
 
-import { QUERY_BOOTH_WITH_PRODUCTS } from "../utils/queries";
-
-import TestComp from "../components/TestComp";
+import { QUERY_BOOTH_WITH_PRODUCTS, QUERY_BOOTHS } from "../utils/queries";
 
 const Booth = () => {
   const [searchText, setSearchText] = useState("");
-  const [showModal, setShowModal] = useState(false);
   const dispatch = useDispatch();
   const state = useSelector((state) => state);
-  const { id } = useParams();
-
+  let { id } = useParams();
+  id = id.trim();
   const [currentProduct, setCurrentProduct] = useState({});
 
-  const { loading, data } = useQuery(QUERY_BOOTH_WITH_PRODUCTS, {
-    variables: { id },
-  });
+  const { loading, data } = useQuery(QUERY_BOOTHS);
 
-  const { products, cart } = state;
+  const { products, booths, cart } = state;
 
   useEffect(() => {
-    // already in global store
-    if (products.length) {
-      setCurrentProduct(products.find((product) => product._id === id));
-    }
-    // retrieved from server
-    else if (data) {
+    if (data) {
+      const boothData = data.booths;
       dispatch({
-        type: UPDATE_PRODUCTS,
-        products: data.products,
+        type: UPDATE_BOOTHS,
+        booths: boothData,
       });
-
-      data.products.forEach((product) => {
-        idbPromise("products", "put", product);
+      boothData.forEach((booth) => {
+        console.log("data", boothData);
+        console.log("booth", booth);
+        idbPromise("booths", "put", booth);
       });
-    }
-    // get cache from idb
-    else if (!loading) {
-      idbPromise("products", "get").then((indexedProducts) => {
+    } else if (!loading) {
+      idbPromise("booths", "get").then((booths) => {
         dispatch({
-          type: UPDATE_PRODUCTS,
-          products: indexedProducts,
+          type: UPDATE_BOOTHS,
+          booths: booths,
         });
       });
     }
-  }, [products, data, loading, dispatch, id]);
+  }, [data, loading, dispatch]);
   console.log("data", data);
   const handleSearchChange = (event) => {
     setSearchText(event.target.value);
   };
-
-  const handleProductClick = (product) => {
-    setCurrentProduct(product);
-    setShowModal(true);
-  };
+  let thisBooth = {};
+  booths.forEach((booth) => {
+    if (booth._id == id) {
+      console.log("FilBooth", booth);
+      thisBooth = booth;
+    }
+  });
 
   return (
     <>
       <Navbar bg="light" expand="lg">
         <Container fluid>
-          <Navbar.Brand href="#">Booth Name</Navbar.Brand>
+          <Navbar.Brand href="#">{thisBooth.boothName}</Navbar.Brand>
           <Navbar.Toggle aria-controls="navbarScroll" />
           <Navbar.Collapse id="navbarScroll">
             <Nav

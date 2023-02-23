@@ -1,23 +1,46 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { UPDATE_USERS, UPDATE_USER_PROFILE } from "../utils/actions";
 import { useNavigate } from "react-router-dom";
 import Cart from "../components/Cart";
-// import Auth from "../../utils/auth";
-
+import { idbPromise } from "../utils/helpers";
 import { useQuery } from "@apollo/client";
 import { QUERY_BOOTH, QUERY_USER, USER_BOOTHS } from "../utils/queries";
+import {
+  Container,
+  Row,
+  Col,
+  Image,
+  ListGroup,
+  Stack,
+  Button,
+} from "react-bootstrap";
 
 const UserProfile = () => {
-  const { data } = useQuery(QUERY_USER);
-  const { userBoothData } = useQuery(USER_BOOTHS);
-  let user;
-  console.log(userBoothData);
-  // const { boothData } = useQuery(QUERY_BOOTH);
-  // console.log('booth data:');
-  // console.log(boothData);
+  const { loading, error, data } = useQuery(QUERY_USER, {});
 
-  if (data) {
-    user = data.user;
-  }
+  const dispatch = useDispatch();
+  const state = useSelector((state) => state);
+
+  const { users } = state;
+  const [modalShow, setModalShow] = useState(false);
+
+  useEffect(() => {
+    if (data) {
+      dispatch({
+        type: UPDATE_USER_PROFILE,
+        userData: data.user,
+      });
+      idbPromise("users", "put", data.user);
+    } else if (!loading) {
+      idbPromise("users", "get").then((user) => {
+        dispatch({
+          type: UPDATE_USER_PROFILE,
+          userData: user,
+        });
+      });
+    }
+  }, [data, loading, dispatch]);
 
   const navigate = useNavigate();
 
@@ -39,10 +62,58 @@ const UserProfile = () => {
   const createBooth = () => {
     navigate("/boothCreation");
   };
+  if (loading) {
+    return <p>Loading...</p>;
+  }
 
+  if (!data) {
+    return <p>No data available</p>;
+  }
   return (
     <>
-      <div className="userProfile container my-1">
+      {users ? (
+        <Container className="d-flex justify-content-center align-items-center mt-4">
+          <Row className="text-center">
+            <Col>
+              <Image
+                src="https://via.placeholder.com/150"
+                roundedCircle
+                alt="User Avatar"
+              />
+              <h1>{users.username}</h1>
+              <small>
+                {users.firstName} {users.lastName}
+                <br />
+              </small>
+
+              <hr />
+              <ListGroup variant="flush">
+                <ListGroup.Item>Email: {users.email}</ListGroup.Item>
+                <ListGroup.Item>Member since: {users.createdAt}</ListGroup.Item>
+                <ListGroup.Item className="text-muted">
+                  <small>user id: {users._id}</small>
+                </ListGroup.Item>
+              </ListGroup>
+              <Stack direction="horizontal" gap={3} className="mx-auto">
+                <Button>View Booths</Button>
+                <div className="vr" />
+                <Button>View Recent Orders</Button>
+              </Stack>
+            </Col>
+          </Row>
+        </Container>
+      ) : (
+        <h3>error</h3>
+      )}
+      <Cart />
+    </>
+  );
+};
+
+export default UserProfile;
+
+{
+  /* <div className="userProfile container my-1">
         {user ? (
           <>
             <h2>
@@ -67,8 +138,10 @@ const UserProfile = () => {
               {user.orders[0] !== undefined
                 ? user.orders[0].products[0].name
                 : ""}
-              </li> */}
-              <li>
+              </li> */
+}
+{
+  /* <li>
                 {user.orders.map((order) => {
                   return (
                     <p key={order._id}>
@@ -84,8 +157,10 @@ const UserProfile = () => {
                 })}
               </li>
               <li>Booths Owned (Work in Progress): {user.boothsOwned}</li>
-              {/* <li>Booths Managing (Work in Progress): {user.boothsManaging}</li> */}
-            </ul>
+              {/* <li>Booths Managing (Work in Progress): {user.boothsManaging}</li> */
+}
+{
+  /*} </ul>
 
             <h4>User Profile Functions</h4>
 
@@ -94,10 +169,5 @@ const UserProfile = () => {
             <button onClick={createBooth}>Booth Creation</button>
           </>
         ) : null}
-      </div>
-      <Cart />
-    </>
-  );
-};
-
-export default UserProfile;
+      </div> */
+}
