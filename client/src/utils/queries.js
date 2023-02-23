@@ -91,23 +91,38 @@ export const QUERY_USER = gql`
   query {
     user {
       _id
+      username
       firstName
       lastName
-      username
       email
+      createdAt
+      boothsOwned {
+        _id
+        boothName
+        description
+        product {
+          _id
+          category {
+            _id
+            name
+          }
+          condition
+          createdAt
+          description
+          name
+          price
+          quantity
+        }
+      }
       orders {
         _id
-        purchaseDate
         products {
           _id
           name
-          description
           price
-          quantity
-          image
         }
+        purchaseDate
       }
-      createdAt
     }
   }
 `;

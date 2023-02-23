@@ -87,6 +87,7 @@ const typeDefs = gql`
       email: String
       password: String
     ): User
+    updateUserBoothsOwned(userId: ID!, boothIds: [ID!]!): User
     deleteUser(
       firstName: String!
       lastName: String!

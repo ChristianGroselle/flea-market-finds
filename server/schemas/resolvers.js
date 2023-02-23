@@ -171,6 +171,13 @@ const resolvers = {
 
       throw new AuthenticationError("Not logged in");
     },
+    updateUserBoothsOwned: async (parent, { userId, boothIds }) => {
+      return await User.findByIdAndUpdate(
+        userId,
+        { $push: { boothsOwned: { $each: boothIds } } },
+        { new: true }
+      );
+    },
     updateProduct: async (parent, { _id, quantity }) => {
       const decrement = Math.abs(quantity) * -1;
 

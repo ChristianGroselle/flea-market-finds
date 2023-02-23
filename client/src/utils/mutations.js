@@ -61,6 +61,18 @@ export const ADD_USER = gql`
   }
 `;
 
+export const UPDATE_USER_BOOTH = gql`
+  mutation updateUserBooth($userId: ID!, $boothId: ID!) {
+    updateUserBooth(userId: $userId, boothId: $boothId) {
+      _id
+      boothsOwned {
+        _id
+        boothName
+      }
+    }
+  }
+`;
+
 // export const ADD_BOOTH = gql`
 //   mutation addUser(
 //     $firstName: String!

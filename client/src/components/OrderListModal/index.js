@@ -10,7 +10,11 @@ import {
   Modal,
 } from "react-bootstrap";
 
-const BoothList = (props) => {
+const OrderListModal = (props) => {
+  let orders = [];
+  if (props.orders) {
+    orders = props.orders;
+  }
   return (
     <>
       <Modal
@@ -21,16 +25,23 @@ const BoothList = (props) => {
       >
         <Modal.Header closeButton>
           <Modal.Title id="contained-modal-title-vcenter">
-            Modal heading
+            Your Booths:
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <h4>Centered Modal</h4>
-          <p>
-            Cras mattis consectetur purus sit amet fermentum. Cras justo odio,
-            dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta
-            ac consectetur ac, vestibulum at eros.
-          </p>
+          {orders.length > 0 ? (
+            <ListGroup variant="flush">
+              {orders.map((order) => (
+                <ListGroup.Item key={order._id}>
+                  <Stack direction="horizontal" gap={3}>
+                    <div>order id: order._id</div>
+                  </Stack>
+                </ListGroup.Item>
+              ))}
+            </ListGroup>
+          ) : (
+            <h3>No orders Found</h3>
+          )}
         </Modal.Body>
         <Modal.Footer>
           <Button onClick={props.onHide}>Close</Button>
@@ -40,4 +51,4 @@ const BoothList = (props) => {
   );
 };
 
-export default BoothList;
+export default OrderListModal;

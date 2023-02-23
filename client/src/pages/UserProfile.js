@@ -3,6 +3,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { UPDATE_USERS, UPDATE_USER_PROFILE } from "../utils/actions";
 import { useNavigate } from "react-router-dom";
 import Cart from "../components/Cart";
+import BoothCreateModal from "../components/BoothCreateModal";
+import BoothListModal from "../components/BoothListModal";
+import OrderListModal from "../components/OrderListModal";
 import { idbPromise } from "../utils/helpers";
 import { useQuery } from "@apollo/client";
 import { QUERY_BOOTH, QUERY_USER, USER_BOOTHS } from "../utils/queries";
@@ -14,6 +17,7 @@ import {
   ListGroup,
   Stack,
   Button,
+  Modal,
 } from "react-bootstrap";
 
 const UserProfile = () => {
@@ -23,7 +27,9 @@ const UserProfile = () => {
   const state = useSelector((state) => state);
 
   const { users } = state;
-  const [modalShow, setModalShow] = useState(false);
+  const [boothModalShow, setBoothModalShow] = useState(false);
+  const [boothCreateModalShow, setBoothCreateModalShow] = useState(false);
+  const [orderModalShow, setOrderModalShow] = useState(false);
 
   useEffect(() => {
     if (data) {
@@ -44,17 +50,6 @@ const UserProfile = () => {
 
   const navigate = useNavigate();
 
-  // display array of products ordered:
-  // const ordersArray = () => {
-  //     user.orders[0].map((product) => (
-  //     <li key={user.orders._id}>
-  //         {product.name} - {product.price}
-  //     </li>
-  //     ));
-  // }
-
-  // console.log(ordersArray);
-
   const navigateToBooth = () => {
     navigate("/");
   };
@@ -71,6 +66,7 @@ const UserProfile = () => {
   }
   return (
     <>
+      {console.log(users)}
       {users ? (
         <Container className="d-flex justify-content-center align-items-center mt-4">
           <Row className="text-center">
@@ -95,9 +91,17 @@ const UserProfile = () => {
                 </ListGroup.Item>
               </ListGroup>
               <Stack direction="horizontal" gap={3} className="mx-auto">
-                <Button>View Booths</Button>
+                <Button onClick={() => setBoothCreateModalShow(true)}>
+                  Create Booth
+                </Button>
                 <div className="vr" />
-                <Button>View Recent Orders</Button>
+                <Button onClick={() => setBoothModalShow(true)}>
+                  View Booths
+                </Button>
+                <div className="vr" />
+                <Button onClick={() => setOrderModalShow(true)}>
+                  View Recent Orders
+                </Button>
               </Stack>
             </Col>
           </Row>
@@ -106,6 +110,20 @@ const UserProfile = () => {
         <h3>error</h3>
       )}
       <Cart />
+      <BoothCreateModal
+        show={boothCreateModalShow}
+        onHide={() => setBoothCreateModalShow(false)}
+      />
+      <BoothListModal
+        show={boothModalShow}
+        onHide={() => setBoothModalShow(false)}
+        booths={users?.boothsOwned || null}
+      />
+      <OrderListModal
+        show={orderModalShow}
+        onHide={() => setOrderModalShow(false)}
+        orders={users?.orders || null}
+      />
     </>
   );
 };
