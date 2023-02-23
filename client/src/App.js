@@ -15,7 +15,7 @@ import NoMatch from "./pages/NoMatch";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Booth from "./pages/Booth";
-import Nav from "./components/Nav";
+import Navigation from "./components/Navigation";
 // import { StoreProvider } from './utils/GlobalState';
 import { Provider } from "react-redux";
 import store from "./utils/store";
@@ -51,7 +51,7 @@ function App() {
         <div>
           {/* <StoreProvider> */}
           <Provider store={store}>
-            <Nav />
+            <Navigation />
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/login" element={<Login />} />

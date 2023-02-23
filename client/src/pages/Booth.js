@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import ProductList from "../components/ProductList";
 import CategoryDropDown from "../components/CategoryDropDown";
 import Cart from "../components/Cart";
+import { UPDATE_USER_PROFILE } from "../utils/actions";
 // import { useStoreContext } from '../utils/GlobalState';
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -27,10 +28,15 @@ import { useParams } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 import { idbPromise } from "../utils/helpers";
 
-import { QUERY_BOOTH_WITH_PRODUCTS, QUERY_BOOTHS } from "../utils/queries";
+import {
+  QUERY_BOOTH_WITH_PRODUCTS,
+  QUERY_BOOTHS,
+  QUERY_USER,
+} from "../utils/queries";
 
 const Booth = () => {
   const [searchText, setSearchText] = useState("");
+  const [isOwner, setIsOwner] = useState(false);
   const dispatch = useDispatch();
   const state = useSelector((state) => state);
   let { id } = useParams();
@@ -38,8 +44,9 @@ const Booth = () => {
   const [currentProduct, setCurrentProduct] = useState({});
 
   const { loading, data } = useQuery(QUERY_BOOTHS);
+  const { data: userData } = useQuery(QUERY_USER);
 
-  const { products, booths, cart } = state;
+  const { users, products, booths, cart } = state;
 
   useEffect(() => {
     if (data) {
@@ -62,7 +69,24 @@ const Booth = () => {
       });
     }
   }, [data, loading, dispatch]);
-  console.log("data", data);
+
+  useEffect(() => {
+    if (userData) {
+      dispatch({
+        type: UPDATE_USER_PROFILE,
+        userData: userData.user,
+      });
+      idbPromise("users", "put", userData.user);
+    } else if (!loading) {
+      idbPromise("users", "get").then((user) => {
+        dispatch({
+          type: UPDATE_USER_PROFILE,
+          userData: user,
+        });
+      });
+    }
+  }, [userData, loading, dispatch]);
+  console.log("data", userData);
   const handleSearchChange = (event) => {
     setSearchText(event.target.value);
   };
@@ -73,6 +97,9 @@ const Booth = () => {
       thisBooth = booth;
     }
   });
+  const ownerTest = users?.boothsOwned.filter(
+    (booth) => booth == thisBooth?._id
+  );
 
   return (
     <>
@@ -99,6 +126,7 @@ const Booth = () => {
         </Container>
       </Navbar>
       <Container>
+        {ownerTest ? <h1>Is Owner</h1> : <p>Not Owner</p>}
         <ProductList id={id} searchText={searchText} />
         <Cart />
       </Container>

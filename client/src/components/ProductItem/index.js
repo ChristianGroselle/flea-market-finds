@@ -88,7 +88,6 @@ function ProductItem(item) {
           <Card.Title>${price}</Card.Title>
           <Card.Img src={`/images/${image}`} alt={name} />
           <Card.Body>
-            <p>Short Description.</p>
             <hr />
             <p>
               {quantity} {pluralize("item", quantity)} in stock

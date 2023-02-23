@@ -4,74 +4,189 @@ const {
   getCategoryArr,
   getBoothArr,
   getProductArr,
+  generateRandomNbrArr,
   getRandomArrItem,
-  getRandomNumber
+  getRandomNumber,
 } = require("./data");
 const { User, Product, Category, Booth } = require("../models");
 
 // make sure we are connected to the database
-db.on('error', (err) => err);
+db.on("error", (err) => err);
 
 // preform this once to the database
 db.once("open", async () => {
   await Category.deleteMany();
-  console.log('============ ❎ Category Colection deleted ');
-  await User.deleteMany();
-  console.log('============ ❎ User Colection deleted ');
-  await Booth.deleteMany();
-  console.log('============ ❎ Booth Colection deleted ');
+  console.log("============ ❎ Category Colection deleted ");
   await Product.deleteMany();
-  console.log('============ ❎ Product Colection deleted ');
-  
-  // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>Seed Category
-  
-  const categoryArr = getCategoryArr()
-  await Category.insertMany(categoryArr);;
+  console.log("============ ❎ Product Colection deleted ");
+  await Booth.deleteMany();
+  console.log("============ ❎ Booth Colection deleted ");
+  await User.deleteMany();
+  console.log("============ ❎ User Colection deleted ");
+
+  // >>>>>>>>Seed Category
+  // seedCategories();
+  console.log("Seeding Categories");
+  const categoryArr = getCategoryArr();
+  const categories = await Category.insertMany(categoryArr);
   console.log("〰️〰️〰️〰️〰️ ✔️ categories seeded 〰️〰️〰️〰️〰️");
-  
-  // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>Seed User with required
-  const userArr = getUserArr();
-  await User.insertMany(userArr);
-  console.log("〰️〰️〰️〰️〰️ ✔️ seeded Users with required fields 〰️〰️〰️〰️〰️");
 
-  // hold db users
-  const users = await User.find();
-  // console.log(users)
- 
-      
-  const productArr = getProductArr();
-  await Product.insertMany(productArr);;
+  // >>>>>>>Seed Product with categories
+  // seedProducts();
+  console.log("Seeding Products");
+  // const categories = await Category.find({});
+  // console.log(categories);
+  // console.log(" got here");
+  const productArr = getProductArr().map((product) => {
+    const catIdx = categories
+      .map((category) => category.name)
+      .indexOf(product.category);
+    if (catIdx !== -1) {
+      return {
+        ...product,
+        category: [
+          {
+            _id: categories[catIdx]._id,
+          },
+        ],
+      };
+    } else {
+      return { ...product, category: [] };
+    }
+  });
+  // console.log(productArr);
+  const products = await Product.insertMany(productArr);
   console.log("〰️〰️〰️〰️〰️ ✔️ products seeded 〰️〰️〰️〰️〰️");
-  
-  // hold db users
-  const products = await Product.find();
-  console.log(products)
 
-  // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>Seed Booth with required
+  // >>>>>>>Seed Booths with products
+  console.log("Seeding Booths");
+  // const products = await Product.find({});
   const boothArr = getBoothArr();
   // console.log(boothArr)
   //  **** for every booth find an random user as owner and account manager then create booth
-  const boothInputArr  = boothArr.map((booth)=> {
+  const boothInputArr = boothArr.map((booth) => {
     // console.log(booth)
-    const userIdx1 = getRandomNumber(users.length)
-    const userIdx2 = getRandomNumber(users.length)
-    console.log(`*** booth: ${booth.boothName}`)
-    console.log(`owner 1: ${users[userIdx1].username}, ${users[userIdx1]._id}   owner 2: ${users[userIdx2].username}, ${users[userIdx2]._id}`)
-    booth.owner.push(users[userIdx1]._id)
-    if (userIdx1 !== userIdx2) {
-      booth.owner.push(users[userIdx2]._id)
-    }
-    // console.log(`booth owner==> ${booth.owner}`)
-    return {      
+    // console.log(`*** booth: ${booth.boothName}`)
+    // params=
+    //   0 we want an index nbr
+    //   arr.length of the array of which we want an index
+    //   5 number of products per booth
+    const productsIdxArr = generateRandomNbrArr(0, products.length, 5, true);
+    return {
       ...booth,
-    }
-  })
+      product: [
+        {
+          _id: products[productsIdxArr[0]]._id,
+        },
+        {
+          _id: products[productsIdxArr[1]]._id,
+        },
+        {
+          _id: products[productsIdxArr[2]]._id,
+        },
+        {
+          _id: products[productsIdxArr[3]]._id,
+        },
+        {
+          _id: products[productsIdxArr[4]]._id,
+        },
+      ],
+    };
+  });
   // console.log(boothInputArr)
-  await Booth.insertMany(boothInputArr);
+  const booths = await Booth.insertMany(boothInputArr);
   console.log("〰️〰️〰️〰️〰️ ✔️ seeded Booths with required fields 〰️〰️〰️〰️〰️");
 
+  // >>>>>>>Seed User with required
+  console.log("Seeding Users");
+  // const booths = await Booth.find({});
+  // const userArr = getUserArr();
+  await User.create({
+    firstName: "Pamela",
+    lastName: "Washington",
+    username: "PWashington",
+    email: "pamela@testmail.com",
+    password: "password12345",
+    orders: [
+      {
+        products: [products[0]._id, products[0]._id, products[1]._id],
+      },
+    ],
+    boothsOwned: [
+      {
+        _id: booths[0]._id,
+      },
+      {
+        _id: booths[3]._id,
+      },
+    ],
+  });
+  console.log("Pamela Created");
+
+  await User.create({
+    firstName: "Elijah",
+    lastName: "Holt",
+    username: "EHolt",
+    email: "eholt@testmail.com",
+    password: "password12345",
+    boothsOwned: [
+      {
+        _id: booths[1]._id,
+      },
+    ],
+  });
+  console.log("Elijah Created");
+
+  await User.create({
+    firstName: "Liane",
+    lastName: "Ricciardo",
+    username: "LRicciardo",
+    email: "LRicciardo@email.com",
+    password: "pass123",
+    isAdmin: true,
+    boothsOwned: [
+      {
+        _id: booths[2]._id,
+      },
+    ],
+  });
+  console.log("Liane Created");
+
+  await User.create({
+    firstName: "Christian",
+    lastName: "Groselle",
+    username: "CGroselle",
+    email: "CGroselle@email.com",
+    password: "pass123",
+    isAdmin: true,
+  });
+  console.log("Christian Created");
+
+  await User.create({
+    firstName: "Alex",
+    lastName: "Cook",
+    username: "ACook",
+    email: "ACook@email.com",
+    password: "pass123",
+    isAdmin: true,
+  });
+  console.log("Alex Created");
+
+  await User.create({
+    firstName: "Micky",
+    lastName: "Adera",
+    username: "MAdera",
+    email: "MAdera@email.com",
+    password: "pass123",
+    isAdmin: true,
+  });
+  console.log("Micky Created");
+
+  console.log("〰️〰️〰️〰️〰️ ✔️ seeded Users with required fields 〰️〰️〰️〰️〰️");
+
+  // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>Seed Booth with required
   // hold db booths
-  const booths = await Booth.find();
+  // const booths = await Booth.find();
   // console.log(booths);
   //  for every booth find the owners and update with boothid
   // for(let b=0; b<booths.length; b++) {
@@ -98,32 +213,9 @@ db.once("open", async () => {
   //   }
   // };
 
+  // ? update owners with user ids?
+  // console.log(users)
 
-  // //  for every booth find the owners and update with boothid
-  // for(let u=0; u<users.length; u++){
-  //   console.log("  ");
-  //   console.log(`> user:${users[u].username} <=> ${users[u]._id}`);
-  //   const userID = users[u]._id;
-  //   const boothsOwned = await Booth.find({ "owner": db.
-  //   db.Schema.Types.ObjectId(userID) });
-  //   if (boothsOwned.length > 0) {
-  //     console.log(`> boothsOwned: ${boothsOwned}`)
-  //   }
-  // }
-    
-    
-
-// ? update user with booth id
-// console.log(users)
-
-
-
-// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>Seed Product
-  // const productArr = getProductArr();
-// for every product find a random booth then create product
-// ? update booth with product id?
-  // const products = await Product.insertMany(productArr);
-
-  console.info(' 🌱 Seeding complete! 🌱');
+  console.info(" 🌱 Seeding complete! 🌱");
   process.exit();
 });
