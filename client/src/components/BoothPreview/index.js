@@ -24,7 +24,7 @@ console.log("preview");
 const BoothPreview = ({ id, name }) => {
   return (
     <>
-      <Container>
+      <Container className="mt-3">
         <Card style={{ height: "100%", width: "100%" }}>
           <Card.Header style={{ textAlign: "left" }} as="h3">
             <Stack direction="horizontal" gap={3}>

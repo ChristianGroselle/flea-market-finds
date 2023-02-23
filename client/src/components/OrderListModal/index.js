@@ -15,6 +15,10 @@ const OrderListModal = (props) => {
   if (props.orders) {
     orders = props.orders;
   }
+  let products = [];
+  if (props.products) {
+    products = props.products;
+  }
   return (
     <>
       <Modal
@@ -34,8 +38,22 @@ const OrderListModal = (props) => {
               {orders.map((order) => (
                 <ListGroup.Item key={order._id}>
                   <Stack direction="horizontal" gap={3}>
-                    <div>order id: order._id</div>
+                    <div>order id: {order._id}</div>
+                    <div className="mx-auto">
+                      Date:
+                      {new Date(
+                        parseInt(props.purchaseDate)
+                      ).toLocaleDateString()}
+                    </div>
                   </Stack>
+                  <ListGroup>
+                    {products.forEach((product) => {
+                      <ListGroup.Item key={order._id + "+" + { product }}>
+                        {product}
+                      </ListGroup.Item>;
+                    })}
+                    ;
+                  </ListGroup>
                 </ListGroup.Item>
               ))}
             </ListGroup>
