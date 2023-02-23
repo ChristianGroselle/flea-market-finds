@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import ProductItem from "../ProductItem";
 import { useDispatch, useSelector } from "react-redux";
 import { UPDATE_PRODUCTS, UPDATE_BOOTHS } from "../../utils/actions";
@@ -7,6 +7,7 @@ import { QUERY_PRODUCTS } from "../../utils/queries";
 import { idbPromise } from "../../utils/helpers";
 import spinner from "../../assets/spinner.gif";
 import { QUERY_BOOTH_WITH_PRODUCTS } from "../../utils/queries";
+import { Modal, Button } from "react-bootstrap";
 
 function ProductList({ id, searchText, selectedCategory }) {
   const dispatch = useDispatch();
@@ -82,6 +83,7 @@ function ProductList({ id, searchText, selectedCategory }) {
               name={product.name}
               price={product.price}
               quantity={product.quantity}
+              description={product.description}
             />
           ))}
         </div>

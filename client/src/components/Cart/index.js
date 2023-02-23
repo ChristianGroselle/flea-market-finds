@@ -9,11 +9,13 @@ import Auth from "../../utils/auth";
 import { useDispatch, useSelector } from "react-redux";
 import { TOGGLE_CART, ADD_MULTIPLE_TO_CART } from "../../utils/actions";
 import "./style.css";
-import * as dotenv from "dotenv";
-dotenv.config();
+const dotenv = require("dotenv");
+const path = require("path");
+
+dotenv.config({ path: path.join(__dirname, "path", ".env") });
 
 // stripePromise returns a promise with the stripe object as soon as the Stripe package loads
-const stripePromise = loadStripe(process.env.STRIPE_PRIVATE_KEY);
+const stripePromise = loadStripe(`pk_test_TYooMQauvdEDq54NiTphI7jx`);
 console.log(process.env);
 
 const Cart = () => {

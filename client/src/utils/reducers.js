@@ -1,5 +1,7 @@
 // import { useReducer } from "react";
 import {
+  UPDATE_USER_PROFILE,
+  UPDATE_USERS,
   UPDATE_PRODUCTS,
   UPDATE_BOOTH_PRODUCTS,
   UPDATE_BOOTHS,
@@ -24,6 +26,16 @@ const initialState = {
 
 export const reducer = (state = initialState, action) => {
   switch (action.type) {
+    case UPDATE_USER_PROFILE:
+      return {
+        ...state,
+        users: action.userData,
+      };
+    case UPDATE_USERS:
+      return {
+        ...state,
+        users: [...action.users],
+      };
     case UPDATE_PRODUCTS:
       return {
         ...state,

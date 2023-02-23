@@ -1,3 +1,9 @@
+import { DELETE_BOOTH } from "./mutations";
+
+export const UPDATE_USERS = "UPDATE_USERS";
+
+export const UPDATE_USER_PROFILE = "UPDATE_USER_PROFILE";
+
 export const UPDATE_PRODUCTS = "UPDATE_PRODUCTS";
 
 export const UPDATE_BOOTHS = "UPDATE_BOOTHS";

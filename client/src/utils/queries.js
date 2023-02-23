@@ -87,30 +87,89 @@ export const QUERY_BOOTH = gql`
   }
 `;
 
+export const QUERY_BOOTH_BY_IDS = gql`
+  query BoothsByIds($ids: [ID]!) {
+    boothsByIds(ids: $ids) {
+      _id
+      boothName
+      owner {
+        username
+      }
+      product {
+        name
+        image
+      }
+      description
+      logo
+    }
+  }
+`;
+
 export const QUERY_USER = gql`
-  {
+  query {
     user {
+      _id
+      username
+      firstName
+      lastName
+      email
+      createdAt
+      boothsOwned {
+        _id
+        boothName
+        description
+        product {
+          _id
+          category {
+            _id
+            name
+          }
+          condition
+          createdAt
+          description
+          name
+          price
+          quantity
+        }
+      }
+      orders {
+        _id
+        products {
+          _id
+          name
+          price
+        }
+        purchaseDate
+      }
+    }
+  }
+`;
+
+export const QUERY_USERS = gql`
+  {
+    users {
       _id
       firstName
       lastName
       username
       email
+      createdAt
+      boothsOwned {
+        _id
+        boothName
+      }
       orders {
         _id
-        purchaseDate
         products {
           _id
           name
-          description
           price
-          quantity
-          image
         }
       }
-      createdAt
     }
   }
 `;
+
 export const USER_ORDERS = gql`
   {
     userOrders {
@@ -135,7 +194,6 @@ export const QUERY_BOOTH_WITH_PRODUCTS = gql`
       product {
         _id
         name
-
         description
         image
         price

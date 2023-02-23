@@ -1,69 +1,69 @@
 const userArr = [
-  { 
-    firstName: 'Christian', 
-    lastName: "Groselle", 
-    username: "CGroselle", 
-    email: 'CGroselle@email.com', 
-    password: 'pass123', 
-    isAdmin: true 
-  },
-  { 
-    firstName: 'Liane', 
-    lastName: "Ricciardo", 
-    username: "LRicciardo", 
-    email: 'LRicciardo@email.com', 
-    password: 'pass123', 
-    isAdmin: true
-  },
-  { 
-    firstName: 'Alex', 
-    lastName: "Cook", 
-    username: "ACook", 
-    email: 'ACook@email.com', 
-    password: 'pass123', 
+  {
+    firstName: "Christian",
+    lastName: "Groselle",
+    username: "CGroselle",
+    email: "CGroselle@email.com",
+    password: "pass123",
     isAdmin: true,
   },
-  { 
-    firstName: 'Micky', 
-    lastName: "Adera", 
-    username: "MAdera", 
-    email: 'MAdera@email.com', 
-    password: 'pass123', 
+  {
+    firstName: "Liane",
+    lastName: "Ricciardo",
+    username: "LRicciardo",
+    email: "LRicciardo@email.com",
+    password: "pass123",
     isAdmin: true,
   },
-  { 
-    firstName: "Pamela", 
-    lastName: "Washington", 
-    username: "PWashington", 
-    email: "pamela@testmail.com", 
+  {
+    firstName: "Alex",
+    lastName: "Cook",
+    username: "ACook",
+    email: "ACook@email.com",
+    password: "pass123",
+    isAdmin: true,
+  },
+  {
+    firstName: "Micky",
+    lastName: "Adera",
+    username: "MAdera",
+    email: "MAdera@email.com",
+    password: "pass123",
+    isAdmin: true,
+  },
+  {
+    firstName: "Pamela",
+    lastName: "Washington",
+    username: "PWashington",
+    email: "pamela@testmail.com",
     password: "password12345",
   },
-  { 
-    firstName: "Elijah", 
-    lastName: "Holt", 
-    username: "EHolt", 
-    email: "eholt@testmail.com", 
-    password: "password12345",  
+  {
+    firstName: "Elijah",
+    lastName: "Holt",
+    username: "EHolt",
+    email: "eholt@testmail.com",
+    password: "password12345",
   },
 ];
 
 const emailEndings = [
-  '@gmail.com',
-  '@yahoo.com',
-  '@hotmail.com',
-  '@outlook.com',
-  '@hotmail.co.uk',
-  '@yahoo.co.uk',
-  '@outlook.co.uk',
-  '@company.org',
-  '@school.edu',
-  '@bureaucracy.gov',
-  '@network.net',
-  '@military.mil',
-  '@domain.co',
-  '@thebighouse.us',
-  '@mailings.post',
-  '@techblog.blog',
+  "@gmail.com",
+  "@yahoo.com",
+  "@hotmail.com",
+  "@outlook.com",
+  "@hotmail.co.uk",
+  "@yahoo.co.uk",
+  "@outlook.co.uk",
+  "@company.org",
+  "@school.edu",
+  "@bureaucracy.gov",
+  "@network.net",
+  "@military.mil",
+  "@domain.co",
+  "@thebighouse.us",
+  "@mailings.post",
+  "@techblog.blog",
 ];
 
 const categoryArr = [
@@ -84,29 +84,29 @@ const categoryArr = [
 ];
 
 const boothArr = [
-  { 
-    boothName: "Marvelous Market", 
-    description: "Marvelous thing for Marvelous People", 
-    owner: [] 
+  {
+    boothName: "Marvelous Market",
+    description: "Marvelous thing for Marvelous People",
+    owner: [],
   },
-  { 
-    boothName: "Prime Packages", 
-    description: "Miscellaneous items to Pack", 
-    owner: [] 
+  {
+    boothName: "Prime Packages",
+    description: "Miscellaneous items to Pack",
+    owner: [],
   },
-  { 
-    boothName: "Flea Market Fancy Finds", 
-    description: "Prime Collectibles", 
-    owner: [] 
+  {
+    boothName: "Flea Market Fancy Finds",
+    description: "Prime Collectibles",
+    owner: [],
   },
-  { 
-    boothName: "Amazing Games", 
-    description: "Be Amazed at the games and assorted finds", 
-    owner: [] 
+  {
+    boothName: "Amazing Games",
+    description: "Be Amazed at the games and assorted finds",
+    owner: [],
   },
 ];
 
-const productArr = [  
+const productArr = [
   {
     name: "Bauducco Butter Cookies Tin ",
     description:
@@ -180,8 +180,7 @@ const productArr = [
   {
     name: "Tales at Bedtime by Enid Blyton",
     category: "Books",
-    description:
-      "1969 collectable Kids Book",
+    description: "1969 collectable Kids Book",
     image: "bedtime-book.jpg",
     price: 9.99,
     quantity: 100,
@@ -189,6 +188,7 @@ const productArr = [
   },
   {
     name: "Spinning Top",
+    category: "Toys",
     category: "Toys",
     description:
       "Spinning is one of the most classic toys in the past. Nowadays, it is also very hot and among kids. This is a portable mini spinning design",
@@ -200,6 +200,7 @@ const productArr = [
   {
     name: "Set of Plastic Horses",
     category: "Toys",
+    category: "Toys",
     description:
       "Vintage 42 Pcs. Marx Plastic Horses & Saddles Roy Rogers Fort Apache",
     image: "plastic-horses.jpg",
@@ -209,6 +210,7 @@ const productArr = [
   },
   {
     name: "Teddy Bear",
+    category: "Toys",
     category: "Toys",
     description:
       "13.7 inches 3 Packs of Soft Stuffed Teddy Bear Plush Dolls, Children’s Sleeping and Playing Toys, Home Decorations",
@@ -220,6 +222,7 @@ const productArr = [
   {
     name: "Alphabet Blocks",
     category: "Toys",
+    category: "Toys",
     description:
       "Spark. Create. Imagine. 40 pc ABC Blocks are desigend for young boys and girls from ages 18 months to 72 months.",
     image: "alphabet-blocks.jpg",
@@ -230,28 +233,28 @@ const productArr = [
 ];
 
 const reactionDescriptions = [
-  'What a cool thought',
-  'I never thought of it like that',
-  'What a great idea',
-  'Interesting',
-  'Mind blowing',
-  'Little idea. Think Bigger!',
-  'Man What were you thing!',
-  'Hello world',
-  'I need to rethink this',
-  'Broaden that idea. You\'re on to something!',
-  'I heard of this.',
-  'This is a great idea',
-  'Simple yet complex',
-  'WoW! Just ... Wow!',
-  'I thought of this but you did it.',
+  "What a cool thought",
+  "I never thought of it like that",
+  "What a great idea",
+  "Interesting",
+  "Mind blowing",
+  "Little idea. Think Bigger!",
+  "Man What were you thing!",
+  "Hello world",
+  "I need to rethink this",
+  "Broaden that idea. You're on to something!",
+  "I heard of this.",
+  "This is a great idea",
+  "Simple yet complex",
+  "WoW! Just ... Wow!",
+  "I thought of this but you did it.",
 ];
 
 // Get a random item given an array
-//*min is the smallest possible generated number 
+//*min is the smallest possible generated number
 //    min of 0 will get an index into an array
 //*max is the largest possible generated number
-const getRandomNumber = (min, max) => 
+const getRandomNumber = (min, max) =>
   Math.floor(Math.random() * (min - max) + max);
 
 // Get a random item given an array
@@ -259,14 +262,14 @@ const getRandomNumber = (min, max) =>
 //*max is the largest possible generated number
 //*numOfRandoms is the number of random numbers to generate
 //*unique is a boolean specifying whether the generated random numbers need to be unique
-const generateRandomNbrArr = (min, max, numOfRandoms, unique) =>  { 
+const generateRandomNbrArr = (min, max, numOfRandoms, unique) => {
   const randomNbrs = [];
-  while(randomNbrs.length<numOfRandoms){
+  while (randomNbrs.length < numOfRandoms) {
     const number = getRandomNumber(min, max);
-    // if number is not found in array (-1) or 
-    //   the number is found the array and the unique flag is not true, 
+    // if number is not found in array (-1) or
+    //   the number is found the array and the unique flag is not true,
     //   then add number to array
-    if(randomNbrs.indexOf(number)==-1||!unique){
+    if (randomNbrs.indexOf(number) == -1 || !unique) {
       randomNbrs.push(number);
     }
   }
@@ -289,20 +292,22 @@ const getBoothArr = () => boothArr;
 const getProductArr = () => productArr;
 
 // Gets a random full name
-const getEmail = () =>{
+const getEmail = () => {
   const user = getRandomArrItem(userArr);
   console.log(user);
-  return `${user.firstName.slice(0,1)}${user.lastName}${getRandomArrItem(emailEndings)}`;
-}
-
+  return `${user.firstName.slice(0, 1)}${user.lastName}${getRandomArrItem(
+    emailEndings
+  )}`;
+};
 
 // Export the functions for use in seed.js
-module.exports = { 
-  getUserArr, 
-  getCategoryArr, 
-  getBoothArr, 
+module.exports = {
+  getUserArr,
+  getCategoryArr,
+  getBoothArr,
   getProductArr,
   getEmail,
-  getRandomArrItem, 
-  generateRandomNbrArr, 
-  getRandomNumber };
+  getRandomArrItem,
+  generateRandomNbrArr,
+  getRandomNumber,
+};

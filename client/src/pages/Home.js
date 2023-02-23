@@ -27,7 +27,7 @@ const Home = () => {
       <Row>
         <BoothStructure />
       </Row>
-      <Cart />
+      {/* <Cart /> */}
     </Container>
   );
 };

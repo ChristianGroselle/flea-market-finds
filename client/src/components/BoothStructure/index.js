@@ -19,6 +19,7 @@ import {
 } from "react-bootstrap";
 function BoothStructure() {
   const { loading, error, data } = useQuery(QUERY_BOOTHS, {});
+
   const dispatch = useDispatch();
   const state = useSelector((state) => state);
 

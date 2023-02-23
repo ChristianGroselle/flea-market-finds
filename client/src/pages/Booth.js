@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import ProductList from "../components/ProductList";
 import CategoryDropDown from "../components/CategoryDropDown";
 import Cart from "../components/Cart";
+import { UPDATE_USER_PROFILE } from "../utils/actions";
 // import { useStoreContext } from '../utils/GlobalState';
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -9,74 +10,102 @@ import {
   UPDATE_CART_QUANTITY,
   ADD_TO_CART,
   UPDATE_PRODUCTS,
+  UPDATE_BOOTHS,
 } from "../utils/actions";
 
-import Button from "react-bootstrap/Button";
-import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import Form from "react-bootstrap/Form";
-import Nav from "react-bootstrap/Nav";
-import Navbar from "react-bootstrap/Navbar";
-import NavDropdown from "react-bootstrap/NavDropdown";
+import {
+  Button,
+  Container,
+  Row,
+  Col,
+  Form,
+  Nav,
+  Navbar,
+  NavDropdown,
+} from "react-bootstrap";
+
 import { useParams } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 import { idbPromise } from "../utils/helpers";
 
-import { QUERY_BOOTH_WITH_PRODUCTS } from "../utils/queries";
-
-import TestComp from "../components/TestComp";
+import {
+  QUERY_BOOTH_WITH_PRODUCTS,
+  QUERY_BOOTHS,
+  QUERY_USER,
+} from "../utils/queries";
 
 const Booth = () => {
   const [searchText, setSearchText] = useState("");
+  const [isOwner, setIsOwner] = useState(false);
   const dispatch = useDispatch();
   const state = useSelector((state) => state);
-  const { id } = useParams();
-
+  let { id } = useParams();
+  id = id.trim();
   const [currentProduct, setCurrentProduct] = useState({});
 
-  const { loading, data } = useQuery(QUERY_BOOTH_WITH_PRODUCTS, {
-    variables: { id },
-  });
+  const { loading, data } = useQuery(QUERY_BOOTHS);
+  const { data: userData } = useQuery(QUERY_USER);
 
-  const { products, cart } = state;
+  const { users, products, booths, cart } = state;
 
   useEffect(() => {
-    // already in global store
-    if (products.length) {
-      setCurrentProduct(products.find((product) => product._id === id));
-    }
-    // retrieved from server
-    else if (data) {
+    if (data) {
+      const boothData = data.booths;
       dispatch({
-        type: UPDATE_PRODUCTS,
-        products: data.products,
+        type: UPDATE_BOOTHS,
+        booths: boothData,
       });
-
-      data.products.forEach((product) => {
-        idbPromise("products", "put", product);
+      boothData.forEach((booth) => {
+        console.log("data", boothData);
+        console.log("booth", booth);
+        idbPromise("booths", "put", booth);
       });
-    }
-    // get cache from idb
-    else if (!loading) {
-      idbPromise("products", "get").then((indexedProducts) => {
+    } else if (!loading) {
+      idbPromise("booths", "get").then((booths) => {
         dispatch({
-          type: UPDATE_PRODUCTS,
-          products: indexedProducts,
+          type: UPDATE_BOOTHS,
+          booths: booths,
         });
       });
     }
-  }, [products, data, loading, dispatch, id]);
-  console.log("data", data);
+  }, [data, loading, dispatch]);
+
+  useEffect(() => {
+    if (userData) {
+      dispatch({
+        type: UPDATE_USER_PROFILE,
+        userData: userData.user,
+      });
+      idbPromise("users", "put", userData.user);
+    } else if (!loading) {
+      idbPromise("users", "get").then((user) => {
+        dispatch({
+          type: UPDATE_USER_PROFILE,
+          userData: user,
+        });
+      });
+    }
+  }, [userData, loading, dispatch]);
+  console.log("data", userData);
   const handleSearchChange = (event) => {
     setSearchText(event.target.value);
   };
+  let thisBooth = {};
+  booths.forEach((booth) => {
+    if (booth._id == id) {
+      console.log("FilBooth", booth);
+      thisBooth = booth;
+    }
+  });
+  const ownerTest = users?.boothsOwned?.filter(
+    (booth) => booth == thisBooth?._id
+  );
 
   return (
     <>
       <Navbar bg="light" expand="lg">
         <Container fluid>
-          <Navbar.Brand href="#">Booth Name</Navbar.Brand>
+          <Navbar.Brand href="#">{thisBooth.boothName}</Navbar.Brand>
           <Navbar.Toggle aria-controls="navbarScroll" />
           <Navbar.Collapse id="navbarScroll">
             <Nav
@@ -97,6 +126,7 @@ const Booth = () => {
         </Container>
       </Navbar>
       <Container>
+        {ownerTest ? <h1>Is Owner</h1> : <p>Not Owner</p>}
         <ProductList id={id} searchText={searchText} />
         <Cart />
       </Container>

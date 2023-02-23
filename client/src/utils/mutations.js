@@ -32,6 +32,7 @@ export const ADD_ORDER = gql`
 export const ADD_BOOTH = gql`
   mutation addBooth($boothName: String!, $description: String!) {
     addBooth(boothName: $boothName, description: $description) {
+      _id
       boothName
       description
     }
@@ -57,6 +58,27 @@ export const ADD_USER = gql`
       user {
         _id
       }
+    }
+  }
+`;
+
+export const UPDATE_USER_BOOTHS_OWNED = gql`
+  mutation updateUserBoothsOwned($userId: ID!, $boothId: ID!) {
+    updateUserBoothsOwned(userId: $userId, boothId: $boothId) {
+      _id
+      boothsOwned {
+        _id
+        boothName
+      }
+    }
+  }
+`;
+
+export const DELETE_BOOTH = gql`
+  mutation deleteBooth($_id: ID!) {
+    deleteBooth(_id: $_id) {
+      _id
+      boothName
     }
   }
 `;
