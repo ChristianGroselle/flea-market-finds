@@ -135,7 +135,6 @@ export const QUERY_BOOTH_WITH_PRODUCTS = gql`
       product {
         _id
         name
-
         description
         image
         price

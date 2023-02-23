@@ -11,14 +11,17 @@ import {
   UPDATE_PRODUCTS,
 } from "../utils/actions";
 
-import Button from "react-bootstrap/Button";
-import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import Form from "react-bootstrap/Form";
-import Nav from "react-bootstrap/Nav";
-import Navbar from "react-bootstrap/Navbar";
-import NavDropdown from "react-bootstrap/NavDropdown";
+import {
+  Button,
+  Container,
+  Row,
+  Col,
+  Form,
+  Nav,
+  Navbar,
+  NavDropdown,
+} from "react-bootstrap";
+
 import { useParams } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 import { idbPromise } from "../utils/helpers";
@@ -29,6 +32,7 @@ import TestComp from "../components/TestComp";
 
 const Booth = () => {
   const [searchText, setSearchText] = useState("");
+  const [showModal, setShowModal] = useState(false);
   const dispatch = useDispatch();
   const state = useSelector((state) => state);
   const { id } = useParams();
@@ -70,6 +74,11 @@ const Booth = () => {
   console.log("data", data);
   const handleSearchChange = (event) => {
     setSearchText(event.target.value);
+  };
+
+  const handleProductClick = (product) => {
+    setCurrentProduct(product);
+    setShowModal(true);
   };
 
   return (

@@ -1,5 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import Cart from "../components/Cart";
 // import Auth from "../../utils/auth";
 
 import { useQuery } from "@apollo/client";
@@ -40,57 +41,62 @@ const UserProfile = () => {
   };
 
   return (
-    <div className="userProfile container my-1">
-      {user ? (
-        <>
-          <h2>
-            {user.firstName} {user.lastName}
-          </h2>
+    <>
+      <div className="userProfile container my-1">
+        {user ? (
+          <>
+            <h2>
+              {user.firstName} {user.lastName}
+            </h2>
 
-          <h4>User Profile Info</h4>
-          <ul>
-            <li>_id: {user._id}</li>
-            <li>Username: {user.username}</li>
-            <li>Email: {user.email}</li>
-            <li>Created At: {user.createdAt}</li>
+            <h4>User Profile Info</h4>
+            <ul>
+              <li>_id: {user._id}</li>
+              <li>Username: {user.username}</li>
+              <li>Email: {user.email}</li>
+              <li>Created At: {user.createdAt}</li>
 
-            <li>
-              Orders PurchasedAt (Work in Progress):
-              {user.orders[0] !== undefined ? user.orders[0].purchaseDate : ""}
-            </li>
-            {/* <li>
+              <li>
+                Orders PurchasedAt (Work in Progress):
+                {user.orders[0] !== undefined
+                  ? user.orders[0].purchaseDate
+                  : ""}
+              </li>
+              {/* <li>
               Orders Products (Work in Progress):{" "}
               {user.orders[0] !== undefined
                 ? user.orders[0].products[0].name
                 : ""}
-            </li> */}
-            <li>
-              {user.orders.map((order) => {
-                return (
-                  <p key={order._id}>
-                    {order.products.map((product) => {
-                      return (
-                        <span key={product._id}>
-                          {product.name} - {product.price}
-                        </span>
-                      );
-                    })}
-                  </p>
-                );
-              })}
-            </li>
-            <li>Booths Owned (Work in Progress): {user.boothsOwned}</li>
-            {/* <li>Booths Managing (Work in Progress): {user.boothsManaging}</li> */}
-          </ul>
+              </li> */}
+              <li>
+                {user.orders.map((order) => {
+                  return (
+                    <p key={order._id}>
+                      {order.products.map((product) => {
+                        return (
+                          <span key={product._id}>
+                            {product.name} - {product.price}
+                          </span>
+                        );
+                      })}
+                    </p>
+                  );
+                })}
+              </li>
+              <li>Booths Owned (Work in Progress): {user.boothsOwned}</li>
+              {/* <li>Booths Managing (Work in Progress): {user.boothsManaging}</li> */}
+            </ul>
 
-          <h4>User Profile Functions</h4>
+            <h4>User Profile Functions</h4>
 
-          <button onClick={navigateToBooth}>Go to Booth</button>
+            <button onClick={navigateToBooth}>Go to Booth</button>
 
-          <button onClick={createBooth}>Booth Creation</button>
-        </>
-      ) : null}
-    </div>
+            <button onClick={createBooth}>Booth Creation</button>
+          </>
+        ) : null}
+      </div>
+      <Cart />
+    </>
   );
 };
 
