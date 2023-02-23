@@ -95,6 +95,17 @@ const typeDefs = gql`
       password: String!
     ): Auth
 
+    assignProductToBooth(
+      name: String!
+      description: String
+      price: Float!
+      quantity: Int!
+      category: ID!
+      condition: String
+      boothId: ID!
+      image: String
+    ): Product
+
     login(email: String!, password: String!): Auth
 
     addOrder(products: [ID]!): Order
@@ -102,6 +113,8 @@ const typeDefs = gql`
     addBooth(boothName: String!, description: String!, logo: String): Booth
     updateBooth(boothName: String!, description: String!, logo: String): Booth
     deleteBooth(boothName: String!, description: String!, logo: String): Booth
+
+    imageUpload(base64Image: String!): String!
 
     addProduct(
       name: String!

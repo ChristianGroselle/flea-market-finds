@@ -4,6 +4,7 @@ const { User, Product, Category, Order, Booth } = require("../models");
 const { signToken } = require("../utils/auth");
 require("dotenv").config();
 const stripe = require("stripe")(process.env.STRIPE_PRIVATE_KEY);
+const fs = require("fs");
 
 const resolvers = {
   Query: {
@@ -196,6 +197,45 @@ const resolvers = {
       const token = signToken(user);
 
       return { token, user };
+    },
+    assignProductToBooth: async (parent, args) => {
+      let product = await Product.create(args);
+
+      await Booth.findOneAndUpdate(
+        {
+          _id: args.boothId,
+        },
+        {
+          $push: { product: product._id },
+        }
+      );
+
+      return product;
+    },
+    imageUpload: async (parent, args) => {
+      let name = Date.now();
+
+      let extensions = {
+        jpeg: "jpg",
+        png: "png",
+        bmp: "bmp",
+        gif: "gif",
+      };
+
+      let ext = "jpg";
+
+      if (args.base64Image.includes("image/jpeg")) ext = "jpg";
+      else if (args.base64Image.includes("image/jpg")) ext = "jpg";
+      else if (args.base64Image.includes("image/png")) ext = "png";
+      else if (args.base64Image.includes("image/bmp")) ext = "bmp";
+      else if (args.base64Image.includes("image/gif")) ext = "gif";
+
+      let finalName = `${name}.${ext}`;
+      let dir = `uploads/${finalName}`;
+
+      var base64Data = args.base64Image.split(",")[1];
+      await fs.writeFileSync(`./${dir}`, base64Data, "base64");
+      return finalName;
     },
   },
 };

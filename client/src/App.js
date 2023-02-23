@@ -16,6 +16,7 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Booth from "./pages/Booth";
 import Nav from "./components/Nav";
+import AssignProduct from "./pages/AssignProduct";
 // import { StoreProvider } from './utils/GlobalState';
 import { Provider } from "react-redux";
 import store from "./utils/store";
@@ -59,6 +60,8 @@ function App() {
               <Route path="/success" element={<Success />} />
               <Route path="/orderHistory" element={<OrderHistory />} />
               <Route path="/products/:id" element={<Detail />} />
+              <Route path="/product-to-booth/:id" element={<AssignProduct />} />
+
               <Route path="/booth/:id" element={<Booth />} />
               <Route path="/userProfile" element={<UserProfile />} />
               <Route path="*" element={<NoMatch />} />

@@ -132,6 +132,9 @@ export const QUERY_BOOTH_WITH_PRODUCTS = gql`
       _id
       boothName
       description
+      owner {
+        _id
+      }
       product {
         _id
         name

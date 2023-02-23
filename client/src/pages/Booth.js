@@ -1,73 +1,95 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import ProductList from "../components/ProductList";
 import CategoryDropDown from "../components/CategoryDropDown";
 import Cart from "../components/Cart";
-// import { useStoreContext } from '../utils/GlobalState';
 import { useDispatch, useSelector } from "react-redux";
-import {
-  REMOVE_FROM_CART,
-  UPDATE_CART_QUANTITY,
-  ADD_TO_CART,
-  UPDATE_PRODUCTS,
-} from "../utils/actions";
 
-import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
-import NavDropdown from "react-bootstrap/NavDropdown";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useQuery } from "@apollo/client";
-import { idbPromise } from "../utils/helpers";
 
-import { QUERY_BOOTH_WITH_PRODUCTS } from "../utils/queries";
+import { QUERY_BOOTH_WITH_PRODUCTS, QUERY_USER } from "../utils/queries";
 
-import TestComp from "../components/TestComp";
+// import Button from "react-bootstrap/Button";
+// import Container from "react-bootstrap/Container";
+// import Row from "react-bootstrap/Row";
+// import Col from "react-bootstrap/Col";
+// import Form from "react-bootstrap/Form";
+// import Nav from "react-bootstrap/Nav";
+// import Navbar from "react-bootstrap/Navbar";
+// import NavDropdown from "react-bootstrap/NavDropdown";
+// import { useParams } from "react-router-dom";
+// import { useQuery } from "@apollo/client";
+// import { idbPromise } from "../utils/helpers";
+
+// import { QUERY_BOOTH_WITH_PRODUCTS } from "../utils/queries";
+
+// import TestComp from "../components/TestComp";
 
 const Booth = () => {
-  const [searchText, setSearchText] = useState("");
-  const dispatch = useDispatch();
-  const state = useSelector((state) => state);
-  const { id } = useParams();
+  // const [searchText, setSearchText] = useState("");
+  // const dispatch = useDispatch();
+  // const state = useSelector((state) => state);
+  // const { id } = useParams();
 
-  const [currentProduct, setCurrentProduct] = useState({});
+  // const [currentProduct, setCurrentProduct] = useState({});
+
+  // const { loading, data } = useQuery(QUERY_BOOTH_WITH_PRODUCTS, {
+  //   variables: { id },
+  // });
+
+  // const { products, cart } = state;
+
+  let ownerId = null;
+  const [searchText, setSearchText] = useState("");
+
+  const { id } = useParams();
 
   const { loading, data } = useQuery(QUERY_BOOTH_WITH_PRODUCTS, {
     variables: { id },
   });
 
-  const { products, cart } = state;
+  const user = useQuery(QUERY_USER);
+  let userData = {};
 
-  useEffect(() => {
-    // already in global store
-    if (products.length) {
-      setCurrentProduct(products.find((product) => product._id === id));
-    }
-    // retrieved from server
-    else if (data) {
-      dispatch({
-        type: UPDATE_PRODUCTS,
-        products: data.products,
-      });
+  if (data !== undefined && data.boothWithProducts.owner[0] !== undefined) {
+    ownerId = data.boothWithProducts.owner[0]._id;
+  }
 
-      data.products.forEach((product) => {
-        idbPromise("products", "put", product);
-      });
-    }
-    // get cache from idb
-    else if (!loading) {
-      idbPromise("products", "get").then((indexedProducts) => {
-        dispatch({
-          type: UPDATE_PRODUCTS,
-          products: indexedProducts,
-        });
-      });
-    }
-  }, [products, data, loading, dispatch, id]);
-  console.log("data", data);
+  if (user.loading === false && user.data !== undefined) {
+    userData = user.data.user;
+  }
+
+  // useEffect(() => {
+  //   // already in global store
+  //   if (products.length) {
+  //     setCurrentProduct(products.find((product) => product._id === id));
+  //   }
+  //   // retrieved from server
+  //   else if (data) {
+  //     dispatch({
+  //       type: UPDATE_PRODUCTS,
+  //       products: data.products,
+  //     });
+
+  //     data.products.forEach((product) => {
+  //       idbPromise("products", "put", product);
+  //     });
+  //   }
+  //   // get cache from idb
+  //   else if (!loading) {
+  //     idbPromise("products", "get").then((indexedProducts) => {
+  //       dispatch({
+  //         type: UPDATE_PRODUCTS,
+  //         products: indexedProducts,
+  //       });
+  //     });
+  //   }
+  // }, [products, data, loading, dispatch, id]);
+  // console.log("data", data);
   const handleSearchChange = (event) => {
     setSearchText(event.target.value);
   };
@@ -76,7 +98,7 @@ const Booth = () => {
     <>
       <Navbar bg="light" expand="lg">
         <Container fluid>
-          <Navbar.Brand href="#">Booth Name</Navbar.Brand>
+          <Navbar.Brand href="#">Booth Name: </Navbar.Brand>
           <Navbar.Toggle aria-controls="navbarScroll" />
           <Navbar.Collapse id="navbarScroll">
             <Nav
@@ -97,6 +119,14 @@ const Booth = () => {
         </Container>
       </Navbar>
       <Container>
+        {userData._id !== undefined && userData._id == ownerId && (
+          <div className="mt-4 mb-4">
+            <Link className="btn btn-primary" to={"/product-to-booth/" + id}>
+              Add product to the Booth
+            </Link>
+          </div>
+        )}
+
         <ProductList id={id} searchText={searchText} />
         <Cart />
       </Container>

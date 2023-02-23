@@ -61,23 +61,38 @@ export const ADD_USER = gql`
   }
 `;
 
-// export const ADD_BOOTH = gql`
-//   mutation addUser(
-//     $firstName: String!
-//     $lastName: String!
-//     $email: String!
-//     $password: String!
-//   ) {
-//     addUser(
-//       firstName: $firstName
-//       lastName: $lastName
-//       email: $email
-//       password: $password
-//     ) {
-//       token
-//       user {
-//         _id
-//       }
-//     }
-//   }
-// `;
+export const ASSIGN_PRODUCT_TO_BOOTH = gql`
+  mutation assignProductToBooth(
+    $name: String!
+    $description: String
+    $price: Float!
+    $quantity: Int!
+    $category: ID!
+    $condition: String
+    $boothId: ID!
+    $image: String
+  ) {
+    assignProductToBooth(
+      name: $name
+      description: $description
+      price: $price
+      quantity: $quantity
+      category: $category
+      condition: $condition
+      boothId: $boothId
+      image: $image
+    ) {
+      _id
+      name
+      description
+      quantity
+      price
+    }
+  }
+`;
+
+export const SINGLE_UPLOAD = gql`
+  mutation imageUpload($base64Image: String!) {
+    imageUpload(base64Image: $base64Image)
+  }
+`;

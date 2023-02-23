@@ -14,7 +14,18 @@ function ProductItem(item) {
   const dispatch = useDispatch();
   const state = useSelector((state) => state);
 
-  const { image, name, _id, price, quantity } = item;
+  const { image, name, _id, price, quantity, description } = item;
+
+  // To desplay only the first 50 letters and spaces combined
+  function excerpt(description) {
+    if (description == undefined || description == null) {
+      return "";
+    } else if (description.length > 50) {
+      return description.substr(0, 50) + "...";
+    } else {
+      return description;
+    }
+  }
 
   const { cart } = state;
 
@@ -39,6 +50,7 @@ function ProductItem(item) {
     }
   };
 
+  console.log(item, "itsm");
   return (
     <Card
       className="text-center"
@@ -47,9 +59,9 @@ function ProductItem(item) {
       <Card.Header as="h5">{name}</Card.Header>
       <Card.Body>
         <Card.Title>${price}</Card.Title>
-        <Card.Img src={`/images/${image}`} alt={name} />
+        <Card.Img src={`/${image}`} alt={name} />
         <Card.Body>
-          <p>Short Description.</p>
+          <p>{excerpt(description)}</p>
           <hr />
           <p>
             {quantity} {pluralize("item", quantity)} in stock

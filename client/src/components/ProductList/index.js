@@ -21,7 +21,6 @@ function ProductList({ id, searchText, selectedCategory }) {
 
   useEffect(() => {
     if (data) {
-      console.log("data", data);
       const boothData = data.boothWithProducts;
       const productArr = boothData.product;
       dispatch({
@@ -82,6 +81,7 @@ function ProductList({ id, searchText, selectedCategory }) {
               name={product.name}
               price={product.price}
               quantity={product.quantity}
+              description={product.description}
             />
           ))}
         </div>
